@@ -1,9 +1,10 @@
+package com.tribbloids.spike.meta.staging
+
+import org.junit.Assert._
+import org.junit.Test
 
 import scala.quoted._
-import scala.quoted.staging.{run, withQuoteContext, Toolbox}
-
-import org.junit.Test
-import org.junit.Assert._
+import scala.quoted.staging.{Toolbox, run, withQuoteContext}
 
 class Test1 {
 

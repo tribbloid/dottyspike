@@ -1,3 +1,4 @@
+package com.tribbloids.spike.meta.staging
 
 // Import Expr and some extension methods
 import scala.quoted._
@@ -20,6 +21,10 @@ object Main {
     val toTheFourth = stagedPower(4)
     println("3^4 = " + toTheFourth(3))
     println()
+    
+    val toThe5 = stagedPower(5)
+    println("3^5 = " + toThe5(3))
+    println()
   }
 
   def stagedPower(n: Int): Double => Double = {
@@ -27,7 +32,11 @@ object Main {
     def code(using QuoteContext) = '{ (x: Double) => ${ powerCode(n, 'x) } }
 
     println(s"staged power for n=" + n + ":")
-    println(withQuoteContext(code.show))
+    
+    println(withQuoteContext{
+      val _code = code
+      _code.show
+    })
 
     // Evaluate the contents of the code and return it's value
     run(code)
@@ -37,8 +46,13 @@ object Main {
     if (n == 0) Expr(1.0) // Expr() lifts 1.0 to '{1.0}
     else if (n == 1) x // optimization to not generate x * 1
     else if (n < 0) throw new Exception("Negative powers not implemented. Left as a small exercise. Dont be shy, try it out.")
-    else if (n == 2) '{ $x * $x } // optimization to not generate { val y = x; y * y }
-    else if (n % 2 == 1)  '{ $x * ${ powerCode(n - 1, x) } }
-    else '{ val y = $x * $x; ${ powerCode(n / 2, 'y) } }
-
+    else if (n == 2) {
+      '{ $x * $x }
+    } // optimization to not generate { val y = x; y * y }
+    else if (n % 2 == 1) {
+      '{ $x * ${ powerCode(n - 1, x) } }
+    } 
+    else {
+      '{ val y = $x * $x; ${ powerCode(n / 2, 'y) } }
+    }
 }
