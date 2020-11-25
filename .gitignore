@@ -2,5 +2,10 @@
 *.log
 
 .idea
+.vscode
+
 **/.bsp
 **/target
+
+.bloop
+.metals
