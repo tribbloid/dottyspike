@@ -10,7 +10,7 @@ object CompileTimeOps {
     type Y = T / T
     type Z = T =:= 1
 
-    val y: T / T = (t / t).asInstanceOf[T / T]
+    lazy val y: T / T = (t / t).asInstanceOf[T / T]
   }
 
   val f1 = new Foo(1)
@@ -19,7 +19,7 @@ object CompileTimeOps {
 
   val f3 = new Foo(0)
 //  val xE = f3.y + f3.x
-//  type EE = f3.Y
+//  type EE = f3.Y //ERROR!
   type FF = f3.Z
 
   type NN = (2 + 3) =:= 6
