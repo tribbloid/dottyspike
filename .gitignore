@@ -1,11 +1,64 @@
 *.class
 *.log
+logs
 
-.idea
-.vscode
+# maven
+*.versionsBackup
 
-**/.bsp
-**/target
+# gradle
+**/.gradle
+**/build
 
-.bloop
-.metals
+# sbt
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE
+.scala_dependencies
+.worksheet
+
+# Eclipse
+.pmd
+.classpath
+.project
+.settings/
+
+# IntelliJ-IDEA
+*.iml
+.idea/
+.idea_modules/
+
+# VSCode
+.vscode/
+
+# BSP & Metals
+.bsp/
+.bloop/
+.metals/
+**/metals.sbt
+
+# the Singapore stack
+**/.ammonite/
+
+# Compiler
+output
+*/target/
+
+#Misc
+temp
+**/temp
+foo
+
+#aws key
+**/rootkey.csv
+
+#publish
+dev/publish.sh
+dev/publishM2.sh
