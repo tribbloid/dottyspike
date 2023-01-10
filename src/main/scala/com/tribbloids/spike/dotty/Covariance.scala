@@ -1,7 +1,5 @@
 package com.tribbloids.spike.dotty
 
-import com.tribbloids.spike.dotty.Covariance.AsDependentType.Gen.Upper
-
 object Covariance {
 
   object AsArg {
@@ -25,23 +23,19 @@ object Covariance {
 
       type Upper
 
-      type Cov = { type T <: Upper }
-      type ContraV = { type T >: Upper }
-    }
-
-    object Gen extends Gen {
-
-      type Upper = Any
-      trait P {
-
+      type _CoVP = P { type T <: Upper }
+      trait CoVP extends P {
+        type T <: Upper
         val vv: Upper
       }
     }
 
+    trait P {}
+
     object GenY extends Gen {
 
       type Upper = Product
-      trait P1 extends Gen.P {
+      trait P1 extends P with CoVP {
 
         val vv: Product
       }
@@ -50,10 +44,12 @@ object Covariance {
     object GenZ extends Gen {
 
       type Upper = Tuple1[Int]
-      trait P2 extends GenY.P1 with Gen.P {
+      trait P2 extends GenY.P1 with P with CoVP {
 
         val vv: Tuple1[Int]
       }
     }
+
+    implicitly[P with GenZ._CoVP <:< P with GenY._CoVP]
   }
 }
