@@ -20,7 +20,7 @@ plugins {
 
     idea
 
-    id("com.github.ben-manes.versions") version "0.42.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
 }
 
 allprojects {
@@ -121,19 +121,25 @@ allprojects {
             testFixturesImplementation(constraintNotation)
         }
 
-        fun bothApi(constraintNotation: Any) {
-
-            api(constraintNotation)
-            testFixturesApi(constraintNotation)
-        }
+//        fun bothApi(constraintNotation: Any) {
+//
+//            api(constraintNotation)
+//            testFixturesApi(constraintNotation)
+//        }
 
         constraints {}
 
-        bothApi("org.scala-lang:scala3-compiler_3:${vs.scalaV}")
-        bothApi("org.scala-lang:scala3-library_3:${vs.scalaV}")
-        bothApi("org.scala-lang:scala3-staging_3:${vs.scalaV}")
+        api("org.scala-lang:scala3-compiler_3:${vs.scalaV}")
+        api("org.scala-lang:scala3-library_3:${vs.scalaV}")
+        api("org.scala-lang:scala3-staging_3:${vs.scalaV}")
 
-        bothApi("dev.zio:izumi-reflect_3:2.2.0")
+        testImplementation("org.typelevel:cats-laws_3:2.9.0")
+
+        api("org.typelevel:cats-free_3:2.9.0")
+
+        api("org.typelevel:cats-effect_3:3.4.5")
+
+        api("dev.zio:izumi-reflect_3:2.2.3")
 
 //      "dev.zio" %% "izumi-reflect" % "2.0.0" withSources () withJavadoc (),
 
@@ -158,7 +164,8 @@ idea {
 //            file(".github"),
 
             file("target"),
-//                        file ("out"),
+            file("bin"),
+            file ("out"),
 
             file(".idea"),
             file(".vscode"),

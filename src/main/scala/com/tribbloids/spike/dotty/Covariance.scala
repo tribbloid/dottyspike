@@ -23,33 +23,23 @@ object Covariance {
 
       type Upper
 
-      type _CoVP = P { type T <: Upper }
-      trait CoVP extends P {
+      trait CoVP {
         type T <: Upper
-        val vv: Upper
+
+        type _Upper = Gen.this.Upper
       }
     }
-
-    trait P {}
 
     object GenY extends Gen {
 
       type Upper = Product
-      trait P1 extends P with CoVP {
-
-        val vv: Product
-      }
+      trait P1 extends CoVP {}
     }
 
     object GenZ extends Gen {
 
       type Upper = Tuple1[Int]
-      trait P2 extends GenY.P1 with P with CoVP {
-
-        val vv: Tuple1[Int]
-      }
+      trait P2 extends CoVP with GenY.P1 {}
     }
-
-    implicitly[P with GenZ._CoVP <:< P with GenY._CoVP]
   }
 }

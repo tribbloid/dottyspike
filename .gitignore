@@ -50,6 +50,8 @@ project/plugins/project/
 # Compiler
 output
 */target/
+*/bin/
+*/out/
 
 #Misc
 temp
