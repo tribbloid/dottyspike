@@ -48,10 +48,10 @@ project/plugins/project/
 **/.ammonite/
 
 # Compiler
-output
-*/target/
-*/bin/
-*/out/
+**/output
+**/target/
+**/bin/
+**/out/
 
 #Misc
 temp
