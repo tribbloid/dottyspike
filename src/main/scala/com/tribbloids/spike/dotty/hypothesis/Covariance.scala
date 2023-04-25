@@ -1,4 +1,4 @@
-package com.tribbloids.spike.dotty
+package com.tribbloids.spike.dotty.hypothesis
 
 object Covariance {
 
