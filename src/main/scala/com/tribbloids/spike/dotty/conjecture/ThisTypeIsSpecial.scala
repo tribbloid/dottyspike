@@ -1,6 +1,6 @@
-package com.tribbloids.spike.dotty.hypothesis
+package com.tribbloids.spike.dotty.conjecture
 
-import com.tribbloids.spike.dotty.hypothesis.ThisTypeIsSpecial.Case2.{S1, S2}
+import com.tribbloids.spike.dotty.conjecture.ThisTypeIsSpecial.Case2.{S1, S2}
 
 // https://stackoverflow.com/questions/76104573/in-scala-3-with-dot-calculus-is-this-type-a-path-dependent-type-what-makes-i
 object ThisTypeIsSpecial {
@@ -16,7 +16,9 @@ object ThisTypeIsSpecial {
 
     trait A1 extends S1
 
-    trait A2 extends A1 with S2
+//    trait A2 extends A1 with S2 {
+//      override type EE = Tuple // or Product
+//    }
   }
 
   object Case2 {
@@ -41,5 +43,6 @@ object ThisTypeIsSpecial {
     trait A1 extends S1.Sub
 
     trait A2 extends A1 with S2.Sub
+//    object A2 extends A2 // delayed error
   }
 }

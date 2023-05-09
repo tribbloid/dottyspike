@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty
 
-package object hypothesis {
+package object conjecture {
 
   /**
     * this package contains all evidences of the following hypotheses:
