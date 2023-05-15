@@ -9,9 +9,7 @@ object HigherKindV3 {
   object Composition {
 
     { // Primary
-      trait Vec_*
-
-      trait Vec[T] extends Vec_*
+      trait Vec[T]
 //     alternatively type Vec = [T] =>> Vec_*
 
       trait Matrix[T] extends Vec[Vec[T]]
@@ -25,20 +23,7 @@ object HigherKindV3 {
         type TT
       }
 
-      trait TGen {
-        type T_/\
-        type T_\/ <: T_/\
-        trait Vec extends Vec_* { type TT >: T_\/ <: T_/\ }
-
-        object VecTGen extends TGen {
-          override type T_/\ = TGen.this.Vec
-          override type T_\/ = TGen.this.Vec
-        }
-
-        trait Matrix extends VecTGen.Vec
-      }
-
-      { // Dual - no bound
+      { // Dual
         trait Vec_* {
           type TT
         }
@@ -47,25 +32,45 @@ object HigherKindV3 {
 
           type T
 
-          trait Vec extends Vec_* {
-            type TT = T
-          }
+          trait Vec extends Vec_* { type TT = T }
 
-          object VecTGen extends TGen {
-            override type T = TGen.this.Vec
-          }
+          object VecTGen extends TGen { override type T = TGen.this.Vec }
 
           trait Matrix extends VecTGen.Vec
         }
+
+        object IntGen extends TGen { type T = Int }
+
+        object VInt extends IntGen.Vec
+        object MInt extends IntGen.Matrix
+      }
+    }
+
+  }
+
+  object Bounded {
+
+    { // Primary
+      trait Vec[T >: Nothing <: Any]
+
+      trait NVec[T >: Nothing <: Number] extends Vec[T]
+    }
+
+    { // Dual
+      trait Vec_*
+
+      trait TGen {
+        type T_/\ <: Any
+        type T_\/ >: Nothing <: T_/\
+
+        trait Vec extends Vec_* {
+          type TT >: T_\/ <: T_/\
+        }
       }
 
-      object IntGen extends TGen {
-
-        type T = Int
+      trait NTGen extends TGen {
+        override type T_/\ <: Number
       }
-
-      object VInt extends IntGen.Vec
-      object MInt extends IntGen.Matrix
     }
   }
 
