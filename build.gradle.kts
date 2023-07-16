@@ -139,13 +139,13 @@ allprojects {
         api("org.typelevel:shapeless3-deriving_3:3.3.0")
 
         // https://mvnrepository.com/artifact/eu.timepit/refined
-        implementation("eu.timepit:refined_3:0.10.3")
+        implementation("eu.timepit:refined_3:0.11.0")
 
 
         api("org.typelevel:cats-free_3:2.9.0")
         api("org.typelevel:cats-effect_3:3.4.5")
 
-        api("dev.zio:izumi-reflect_3:2.3.4")
+        api("dev.zio:izumi-reflect_3:2.3.8")
 
 //      "dev.zio" %% "izumi-reflect" % "2.0.0" withSources () withJavadoc (),
 

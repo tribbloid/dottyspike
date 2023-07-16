@@ -5,8 +5,8 @@ package object conjecture {
   /**
     * this package contains all evidences of the following hypotheses:
     *
-    *   - System-lambdaP2 is isomorphic to Calculus-of-Construction
+    *   - Calculus-of-Construction vs System-lambdaP2
     *
-    *   - DOT calculus is isomorphic to DOT calculus with higher-kind
+    *   - DOT calculus vs DOT calculus with higher-kind
     */
 }
