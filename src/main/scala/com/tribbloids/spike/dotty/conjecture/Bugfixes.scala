@@ -5,16 +5,16 @@ object Bugfixes {
   object `ExtensionalEquality F[X] vs F[_ <: X] For Covariant F` {
 
     { // Primary
-      trait Mat[+T]
+      trait F[+T]
 
-      summon[Mat[Product] <:< Mat[_ <: Product]]
+      summon[F[Product] <:< F[_ <: Product]]
 
-      summon[Mat[_ <: Product] <:< Mat[Product]] // oops
-      summon[Mat[Product] =:= Mat[_ <: Product]] // oops
+      summon[F[_ <: Product] <:< F[Product]] // oops
+      summon[F[Product] =:= F[_ <: Product]] // oops
     }
 
     { // Dual
-      trait Mat_* {
+      trait F_* {
         type TT
       }
 
@@ -22,7 +22,7 @@ object Bugfixes {
 
         type T_/\
         type T_\/ <: T_/\
-        type Mat = Mat_* { type TT <: T_/\ }
+        type Mat = F_* { type TT <: T_/\ }
       }
 
       object ProductGen extends TGen {
@@ -37,6 +37,44 @@ object Bugfixes {
       }
 
       summon[ProductGen.Mat =:= LessThanProductGen.Mat]
+    }
+  }
+
+  object `ExtensionalEquality F[X] vs F[_ >: X] For Contravariant F` {
+
+    { // Primary
+      trait F[-T]
+
+      summon[F[Product] <:< F[_ >: Product]]
+
+      summon[F[_ >: Product] <:< F[Product]] // oops
+      summon[F[Product] =:= F[_ >: Product]] // oops
+    }
+
+    { // Dual
+      trait F_* {
+        type TT
+      }
+
+      trait TGen {
+
+        type T_/\
+        type T_\/ <: T_/\
+        type F = F_* { type TT >: T_\/ }
+      }
+
+      object ProductGen extends TGen {
+        override type T_/\ = Product
+        override type T_\/ = Product
+      }
+
+      object MoreThanProductGen extends TGen {
+        override type T_/\ = Any
+        override type T_\/ = Product
+
+      }
+
+      summon[ProductGen.F =:= MoreThanProductGen.F]
     }
   }
 

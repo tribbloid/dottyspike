@@ -43,13 +43,13 @@ So why is CoC (or higher kind rules in many dependent type systems) necessary? S
 
 ### UPDATE 1
 
-Ideally the following examples should be formalised in a proof assistant and be posted under math/proof assistant stack exchange, but instead, all examples are written in Scala 3, a functional language with a rich type system. This is because of the following reasons:
+Ideally the following examples should be formalised in a proof assistant and be posted under math/proof assistant stack exchange, but I opted to write all examples in Scala 3, a functional language with a rich type system, due to following reasons:
 
 - Both DOT and system D has a soundness proof, while DOT with higher-kind doesn't.
 - The effort to encode higher kind in Scala 3 in terms of dependent types has been attempted many times before (see the following 2016 slide):
 	- https://conf.researchr.org/details/scala-2016/scala-2016/5/Implementing-Higher-Kinded-Types-in-Dotty
 	- https://www.slideshare.net/Odersky/implementing-higherkinded-types-in-dotty
-- Status quo higher kind inference implementation of Scala 3 may be too complex and be the source of a few ambiguities (one is shown in the last example). Thus, the hypothesis entails the immediate benefit of avoiding all the above pitfalls.
+- Status quo higher kind inference implementation of Scala 3 may be too complex and be the source of a few bugs and ambiguities (see Bugfixes section for details). Thus, the conjecture entails the immediate benefit of sidestepping them.
 - I'm not a proficient user of proof assistant, neither do I have enough reputation in math/proof assistant stack exchange to set up bounties.
 
 Regardless, I'll try to post a refined version in LEAN4 in a few weeks.
@@ -330,82 +330,6 @@ Common functional programming concepts within Hindley-Milner/System F also becom
       trait NN extends NNGen.NodeImpl
     }
 ```
-
-Match type is a Scala3 new feature that manifests ad-hoc type constructor. However, long before the existence of this feature, its dual form (using implicit term as type class) has been used in Scala2 for a long time. For consistency, the following example will include both dual forms, using implicit terms and outer objects as type classes respectively:
-
-(simple match type)
-
-```scala
-{ // primary  
-  type Ext[S] = S match {  
-    case Float => Double  
-    case Int => Long  
-    case _ => S  
-  }  
-  
-  summon[Ext[Int] =:= Long]  
-}  
-  
-{ // dual, type classes are implicits/given
-  trait SGen {  
-    type S  
-    type Ext  
-  }  
-  type GenAux[_S] = SGen { type S = _S }  
-  
-  trait Gen_Fallback1 {  
-    given [_S]: GenAux[_S] = new SGen {  
-      final override type S = _S  
-      final override type Ext = _S  
-    }  
-  }  
-  
-  trait Gen_Fallback0 extends Gen_Fallback1 {  
-  
-    implicit object IntGen extends SGen {  
-      final override type S = Int  
-      final override type Ext = Long  
-    }  
-  }  
-  
-  object SGen extends Gen_Fallback0 {  
-  
-    implicit object FloatGen extends SGen {  
-      final override type S = Float  
-      final override type Ext = Double  
-    }  
-  }  
-  
-  val gen = summon[GenAux[Int]]  
-  summon[gen.Ext =:= Long]  
-}  
-  
-{ // dual, type classes are outer objects
-  
-  trait Ext_*  
-  
-  trait SGen {  
-    type S  
-    type Ext  
-  }  
-  
-  object FloatGen extends SGen {  
-    override type S = Float  
-    type Ext = Double  
-  }  
-  object IntGen extends SGen {  
-    override type S = Int  
-    type Ext = Long  
-  }  
-  trait FallbackGen extends SGen {  
-    type Ext = S  
-  }  
-  
-  summon[IntGen.Ext =:= Long]  
-}
-```
-
-There is however 1 caveat
 
 #### Bugfixes
 
