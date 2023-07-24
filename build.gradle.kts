@@ -64,7 +64,9 @@ allprojects {
                     mutableListOf(
                         "-encoding", "UTF-8",
 
-                        "-verbose", "-explain"
+                        "-verbose", "-explain",
+                    
+                        "-language:experimental.dependent"
                     )
 
                 additionalParameters = compilerOptions

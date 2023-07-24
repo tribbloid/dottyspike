@@ -1,6 +1,11 @@
 package com.tribbloids.spike.dotty.conjecture
 
+//import scala.language.experimental.dependent
+//import scala.annotation.experimental.dependent
+
 object Bugfixes {
+
+  import compiletime.testing._
 
   object `ExtensionalEquality F[X] vs F[_ <: X] For Covariant F` {
 
@@ -9,8 +14,15 @@ object Bugfixes {
 
       summon[F[Product] <:< F[_ <: Product]]
 
-      summon[F[_ <: Product] <:< F[Product]] // oops
-      summon[F[Product] =:= F[_ <: Product]] // oops
+//      summon[F[_ <: Product] <:< F[Product]] // oops
+//      summon[F[Product] =:= F[_ <: Product]] // oops
+
+      typeCheckErrors( // Not widely used as string cannot be refactored regardless
+        """
+          summon[F[_ <: Product] <:< F[Product]] // oops
+          summon[F[Product] =:= F[_ <: Product]] // oops
+          """
+      )
     }
 
     { // Dual
@@ -47,8 +59,8 @@ object Bugfixes {
 
       summon[F[Product] <:< F[_ >: Product]]
 
-      summon[F[_ >: Product] <:< F[Product]] // oops
-      summon[F[Product] =:= F[_ >: Product]] // oops
+      //      summon[F[_ >: Product] <:< F[Product]] // oops
+      //      summon[F[Product] =:= F[_ >: Product]] // oops
     }
 
     { // Dual
@@ -151,6 +163,7 @@ object Bugfixes {
 
     { // primary
       trait Vec[+T]
+      trait VecD extends Vec[Double] {}
 
       type Ext[S <: Vec[_]] = S match {
         case Vec[t] => t
@@ -161,11 +174,13 @@ object Bugfixes {
       // broken in Scala 3.3: Cannot prove that e.Ext[Seq[Int]] =:= Int
       // works in Scala 3.4+
 
+      implicitly[Ext[VecD] =:= Double]
       implicitly[Int <:< Ext[Vec[Int]]]
     }
 
     { // dual, type classes are implicit terms
       trait Vec[+T]
+      trait VecD extends Vec[Double] {}
 
       trait SGen {
         type SS
@@ -175,20 +190,24 @@ object Bugfixes {
 
       object SGen {
 
-        class VecGen extends SGen {
-          final type SS = Vec[Ext]
-        }
+//        class VecGen extends SGen {}
 
-        implicit def forVec[T]: VecGen { type Ext = T } = new VecGen {
+        implicit def forVec[T, S <: Vec[T]]: SGen { type Ext = T; type SS = S } = new SGen {
           type Ext = T
+          type SS = S
         }
       }
 
       val gen = summon[GenAux[Vec[Int]]]
       summon[gen.Ext =:= Int] // success!
+
+      val gen2 = summon[GenAux[VecD]]
+      summon[gen2.Ext =:= Double] // success!
     }
 
     { // dual, type classes are outer objects
+      // TODO: still lack VecD implementation
+
       trait Vec_* { type TT }
       type VecLt[T] = Vec_* { type TT <: T } // This is unnecessary if match type can extract bound directly
 
@@ -228,11 +247,11 @@ object Bugfixes {
         }
 
         object SIntGen extends SGen {
-          final type S = Int
+          final type S = IntGen.Vec
         }
 
-        implicitly[SIntGen.Ext =:= Int]
-        implicitly[SIntGen.Ext <:< Int]
+        //        implicitly[SIntGen.Ext =:= Int]
+        //        implicitly[SIntGen.Ext <:< Int]
         // still broken in Scala 3.3, but easier to fix
       }
     }
@@ -265,8 +284,42 @@ object Bugfixes {
           val wrapper: Wrapper = ???
         }
 
-        val polyFn = (x: Col) => x.wrapper
+        val polyFn: (x: Col) => x.Wrapper = (x: Col) => x.wrapper
       }
+    }
+  }
+
+  object `Anonymous class in higher kinded value class #18099` {
+
+    { // Primary
+      class Foo[A]
+
+      object Test {
+        class Bar[F[_]](val underlying: Any) {
+          def foo: Foo[F[Any]] = new Foo[F[Any]] {}
+        }
+      }
+    }
+
+    { // Dual
+      trait AGen {
+
+        class Foo
+
+        trait FUnderscoreGen extends AGen {}
+      }
+      object AnyGen extends AGen
+
+//      trait F_Gen {
+//
+//        type F_ <: ((aGen: AGen) => aGen.FUnderscoreGen)
+//
+//        class Bar(constructor: F_)(val underlying: Any) {
+//          val fuGen: F_[AnyGen] = constructor(AnyGen)
+//
+//          def foo: F_[AnyGen] = new fuGen.Foo {}
+//        }
+//      }
     }
   }
 }

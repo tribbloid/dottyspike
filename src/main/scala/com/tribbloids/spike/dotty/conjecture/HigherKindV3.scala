@@ -229,36 +229,4 @@ object HigherKindV3 {
       type _4 = _3.Succ
     }
   }
-
-  object DependentPoly {
-
-    object Problems {
-
-      sealed trait Col[V] {
-
-        trait Wrapper
-
-        val wrapper: Wrapper = ???
-      }
-
-      val polyFn = [C <: Col[?]] => (x: C) => x.wrapper
-    }
-
-    object Dual {
-
-      trait VGen {
-
-        type V
-
-        sealed trait Col {
-
-          trait Wrapper
-
-          val wrapper: Wrapper = ???
-        }
-
-        val polyFn = (x: Col) => x.wrapper
-      }
-    }
-  }
 }
