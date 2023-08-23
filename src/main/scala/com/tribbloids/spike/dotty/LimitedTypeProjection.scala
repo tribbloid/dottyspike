@@ -4,14 +4,14 @@ object LimitedTypeProjection {
 
   trait I
 
-  trait Outer {
+  trait Entity {
 
-    type Inner <: I
-//    trait Inner {
-//
-//
-//    }
+    type Key
+
+    type Key2 <: I
   }
 
-  val v: Outer#Inner = ???
+//  type Dictionary[T <: Entity] = Map[T#Key, T] // doesn't work lol
+  type Dictionary2 = Map[Entity#Key, Entity] // work lol
+  type Dictionary3 = Map[Entity#Key2, Entity] // work lol
 }

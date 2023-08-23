@@ -1,8 +1,5 @@
 package com.tribbloids.spike.dotty.conjecture
 
-//import scala.language.experimental.dependent
-//import scala.annotation.experimental.dependent
-
 object Bugfixes {
 
   import compiletime.testing._
@@ -320,6 +317,22 @@ object Bugfixes {
 //          def foo: F_[AnyGen] = new fuGen.Foo {}
 //        }
 //      }
+    }
+  }
+
+  object `this.type <: Compat` {
+
+    trait Law
+    trait NodeK[+L <: Law] {
+      type Value
+
+      {
+        summon[this.type <:< NodeK.Compat[L, Value]]
+      }
+    }
+
+    object NodeK {
+      type Compat[L <: Law, V] = NodeK[L] { type Value <: V }
     }
   }
 }
