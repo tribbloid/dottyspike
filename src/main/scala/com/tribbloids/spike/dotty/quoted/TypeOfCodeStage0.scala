@@ -3,7 +3,7 @@ package com.tribbloids.spike.dotty.quoted
 import scala.compiletime.summonInline
 import scala.quoted.{Expr, Quotes, Type}
 
-object Summoner {
+object TypeOfCodeStage0 {
 
   //  val tt = summonInline[Type[Int]] // oops not working
 

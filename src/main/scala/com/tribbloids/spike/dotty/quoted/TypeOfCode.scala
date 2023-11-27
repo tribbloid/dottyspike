@@ -1,8 +1,8 @@
 package com.tribbloids.spike.dotty.quoted
 
-object Summonee {
+object TypeOfCode {
 
-  import com.tribbloids.spike.dotty.quoted.Summoner._
+  import com.tribbloids.spike.dotty.quoted.TypeOfCodeStage0._
 
   def main(args: Array[String]): Unit = {
 
