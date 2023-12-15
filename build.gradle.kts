@@ -10,25 +10,45 @@ plugins {
     id("ai.acyclic.publish-conventions")
 }
 
-dependencies {
-    val catsV = "2.10.0"
+allprojects {
 
-    api("org.typelevel:cats-laws_3:${catsV}")
-    api("org.typelevel:cats-free_3:${catsV}")
-    api("org.typelevel:cats-effect_3:3.4.5")
+    dependencies {
 
-    // https://mvnrepository.com/artifact/org.typelevel/shapeless3-deriving
-    api("org.typelevel:shapeless3-deriving_3:3.3.0")
+        val catsV = "2.10.0"
 
-    // https://mvnrepository.com/artifact/eu.timepit/refined
-    api("eu.timepit:refined_3:0.11.0")
+        api("org.typelevel:cats-laws_3:${catsV}")
+        api("org.typelevel:cats-free_3:${catsV}")
+        api("org.typelevel:cats-effect_3:3.5.2")
 
-    api("dev.zio:izumi-reflect_3:2.3.8")
+        // https://mvnrepository.com/artifact/org.typelevel/shapeless3-deriving
+        api("org.typelevel:shapeless3-deriving_3:3.3.0")
+
+        // https://mvnrepository.com/artifact/eu.timepit/refined
+        api("eu.timepit:refined_3:0.11.0")
+
+        api("dev.zio:izumi-reflect_3:2.3.8")
+    }
+
+    tasks {
+
+        withType<ScalaCompile> {
+
+            scalaCompileOptions.apply {
+
+                additionalParameters.addAll(
+                    listOf(
+                        "-language:experimental.dependent"
+                    )
+                )
+            }
+        }
+    }
 }
+
 
 idea {
 
     module {
-        excludeDirs.add(file("latex"))
+        excludeDirs.add(file("doc"))
     }
 }
