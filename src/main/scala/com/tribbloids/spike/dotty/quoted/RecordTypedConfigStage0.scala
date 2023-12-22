@@ -10,10 +10,16 @@ object RecordTypedConfigStage0 {
 
   transparent inline def typesafeConfig(inline pairs: (String, Any)*) = ${ typesafeConfigImpl('pairs) }
 
-  def typesafeConfigImpl(pairs: Expr[Seq[(String, Any)]])(using Quotes): Expr[Any] =
+  def typesafeConfigImpl(pairs: Expr[Seq[(String, Any)]])(
+      using
+      Quotes
+  ): Expr[Any] =
     import quotes.reflect.*
-    val unpacked = Varargs.unapply(pairs).getOrElse(Nil).map:
-      case '{ ($k: String) -> ($v: t) } => k.valueOrError -> v
+    val unpacked = Varargs
+      .unapply(pairs)
+      .getOrElse(Nil)
+      .map:
+        case '{ ($k: String) -> ($v: t) } => k.valueOrError -> v
 
     val typ = unpacked.foldLeft(TypeRepr.of[Config]): (acc, entry) =>
       Refinement(acc, entry._1, entry._2.asTerm.tpe.widen)

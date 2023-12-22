@@ -9,7 +9,7 @@ object Bugfixes {
     { // Primary
       trait F[+T]
 
-      summon[F[Product] <:< F[_ <: Product]]
+      summon[F[Product] <:< F[? <: Product]]
 
 //      summon[F[_ <: Product] <:< F[Product]] // oops
 //      summon[F[Product] =:= F[_ <: Product]] // oops
@@ -162,7 +162,7 @@ object Bugfixes {
       trait Vec[+T]
       trait VecD extends Vec[Double] {}
 
-      type Ext[S <: Vec[_]] = S match {
+      type Ext[S <: Vec[?]] = S match {
         case Vec[t] => t
       }
 
@@ -335,4 +335,30 @@ object Bugfixes {
       type Compat[L <: Law, V] = NodeK[L] { type Value <: V }
     }
   }
+
+  object SimpleBoundDeduction {
+
+    { // Primary
+
+      trait IUB
+
+      type TT[I <: IUB] = I
+
+      //    val v: IUB = ??? : TT[?]
+      //    summon[TT[?] <:< IUB]
+    }
+
+    { // Dual
+
+      trait IUB
+
+      trait IGen {
+        type I <: IUB
+        type TT = I
+      }
+
+      summon[IGen#TT <:< IUB]
+    }
+  }
+
 }
