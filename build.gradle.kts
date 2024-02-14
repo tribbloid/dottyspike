@@ -21,10 +21,10 @@ allprojects {
         api("org.typelevel:cats-effect_3:3.5.2")
 
         // https://mvnrepository.com/artifact/org.typelevel/shapeless3-deriving
-        api("org.typelevel:shapeless3-deriving_3:3.3.0")
+        api("org.typelevel:shapeless3-deriving_3:3.4.1")
 
         // https://mvnrepository.com/artifact/eu.timepit/refined
-        api("eu.timepit:refined_3:0.11.0")
+        api("eu.timepit:refined_3:0.11.1")
 
         api("dev.zio:izumi-reflect_3:2.3.8")
     }
