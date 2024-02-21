@@ -4,18 +4,6 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, 
 import java.util.Base64
 import scala.quoted.*
 
-sealed trait SerializableExpr[T]:
-  def apply(x: T)(
-      using
-      Quotes
-  ): Expr[T]
-
-sealed trait DeSerializableExpr[T]:
-  def unapply(x: Expr[T])(
-      using
-      Quotes
-  ): Option[T]
-
 object SerializableExpr {
 
   private inline val MAX_LITERAL_LENGTH = 32768
@@ -23,36 +11,13 @@ object SerializableExpr {
   lazy val encoder: Base64.Encoder = Base64.getEncoder
   lazy val decoder: Base64.Decoder = Base64.getDecoder
 
-  def apply[T: SerializableExpr](x: T)(
-      using
-      Quotes
-  ): Expr[T] =
-    summon[SerializableExpr[T]].apply(x)
-
-  def unapply[T: DeSerializableExpr](x: Expr[T])(
-      using
-      Quotes
-  ): Option[T] =
-    summon[DeSerializableExpr[T]].unapply(x)
-
-  given serializableExpr[T <: Serializable: Type]: SerializableExpr[T] with {
+  given serializableExpr[T <: Serializable: Type]: ToExpr[T] with {
     def apply(x: T)(
         using
         Quotes
     ): Expr[T] =
       val stringsExpr = Varargs(serialize(x).map(Expr(_)))
       '{ deserialize[T]($stringsExpr*) }
-  }
-
-  given deSerializableExpr[T <: Serializable: Type]: DeSerializableExpr[T] with {
-    def unapply(x: Expr[T])(
-        using
-        Quotes
-    ): Option[T] =
-      x match
-        case '{ deserialize[T](${ Varargs(stringExprs) }*) } =>
-          Exprs.unapply(stringExprs).map(strings => deserialize(strings*))
-        case _ => None
   }
 
   private def serialize(x: Serializable): Seq[String] = {
@@ -73,15 +38,12 @@ object SerializableExpr {
 }
 
 object App {
-  import SerializableExpr.given
+  import SerializableExpr.*
 
   def example(
       using
       Quotes
   ) = {
-    val serializedExpr = SerializableExpr("abc")
-    serializedExpr match
-      case SerializableExpr(value) => println(value)
-      case _ =>
+    val serializedExpr: Expr[String] = Expr("abc")
   }
 }
