@@ -11,8 +11,8 @@ object Bugfixes {
 
       summon[F[Product] <:< F[? <: Product]]
 
-//      summon[F[_ <: Product] <:< F[Product]] // oops
-//      summon[F[Product] =:= F[_ <: Product]] // oops
+      //      summon[F[_ <: Product] <:< F[Product]] // oops
+      //      summon[F[Product] =:= F[_ <: Product]] // oops
 
       typeCheckErrors( // Not widely used as string cannot be refactored regardless
         """
@@ -187,7 +187,7 @@ object Bugfixes {
 
       object SGen {
 
-//        class VecGen extends SGen {}
+        //        class VecGen extends SGen {}
 
         implicit def forVec[T, S <: Vec[T]]: SGen { type Ext = T; type SS = S } = new SGen {
           type Ext = T
@@ -237,10 +237,15 @@ object Bugfixes {
       { // If you insist on using match type without higher kind
         trait SGen {
           type S <: Vec_*
-          type Ext = S match {
-            case VecLt[t] => t
-            case _ => S
-          }
+          //          type Ext = S match {
+          //            case VecLt[t] => t
+          //            case _ => S
+          //          }
+          /*
+          The match type contains an illegal case:
+    case VecLt[t] => t
+(this error can be ignored for now with `-source:3.3`)
+           */
         }
 
         object SIntGen extends SGen {
@@ -307,16 +312,16 @@ object Bugfixes {
       }
       object AnyGen extends AGen
 
-//      trait F_Gen {
-//
-//        type F_ <: ((aGen: AGen) => aGen.FUnderscoreGen)
-//
-//        class Bar(constructor: F_)(val underlying: Any) {
-//          val fuGen: F_[AnyGen] = constructor(AnyGen)
-//
-//          def foo: F_[AnyGen] = new fuGen.Foo {}
-//        }
-//      }
+      //      trait F_Gen {
+      //
+      //        type F_ <: ((aGen: AGen) => aGen.FUnderscoreGen)
+      //
+      //        class Bar(constructor: F_)(val underlying: Any) {
+      //          val fuGen: F_[AnyGen] = constructor(AnyGen)
+      //
+      //          def foo: F_[AnyGen] = new fuGen.Foo {}
+      //        }
+      //      }
     }
   }
 

@@ -16,7 +16,5 @@ object IDTypeBreakingCheck {
 
     type TT2 = UnderString.TT[UnderString.ID2] // works
     //  type TT1 = UnderString.TT[ID] // doesn't
-
   }
-
 }
