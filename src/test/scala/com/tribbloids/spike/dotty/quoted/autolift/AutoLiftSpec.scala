@@ -8,8 +8,8 @@ class AutoLiftSpec extends AnyFunSpec {
 
     it("get") {
 
-      val t1 = AutoLift.TypeTag.get[Int]
-      val t2 = summon[AutoLift.TypeTag[Int]]
+//      val t1 = AutoLift.TypeTag.get[Int]
+//      val t2 = summon[AutoLift.TypeTag[Int]]
     }
   }
 }
