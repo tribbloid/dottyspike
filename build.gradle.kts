@@ -34,7 +34,7 @@ allprojects {
         // https://mvnrepository.com/artifact/eu.timepit/refined
         api("eu.timepit:refined_3:0.11.1")
 
-        api("dev.zio:izumi-reflect_3:2.3.8")
+        api("dev.zio:izumi-reflect_3:2.3.9")
 
         api("org.scala-lang:scala3-compiler_3:${vs.scala.v}")
         api("org.scala-lang:scala3-tasty-inspector_3:${vs.scala.v}")

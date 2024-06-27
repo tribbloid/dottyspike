@@ -1,5 +1,11 @@
 //val versions = gradle.rootProject.versions()
 
+
+include(
+    ":spark",
+)
+
+
 pluginManagement.repositories {
     gradlePluginPortal()
     mavenCentral()
