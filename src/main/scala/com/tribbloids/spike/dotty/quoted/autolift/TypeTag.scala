@@ -25,7 +25,7 @@ case class TypeTag[T](
   def tree: tpd.Tree = {
 
     val bytes = TastyString.unpickle(tastyPickle)
-    val unpickler = new DottyUnpickler(NoAbstractFile, bytes, UnpickleMode.TypeTree)
+    val unpickler = new DottyUnpickler(NoAbstractFile, bytes, true, UnpickleMode.TypeTree)
 
 //    unpickler.enter(Set.empty)
 //    val result: tpd.Tree = unpickler.tree

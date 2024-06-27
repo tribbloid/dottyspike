@@ -1,5 +1,5 @@
-*.bat text eol=crlf
-*.cmd text eol=crlf
+*.bat text eol=crlf executable
+*.cmd text eol=crlf executable
 *.java text eol=lf
 *.scala text eol=lf
 *.xml text eol=lf
@@ -7,4 +7,4 @@
 *.R text eol=lf
 
 # from apache spark
-*.sh text eol=lf
+*.sh text eol=lf executable
