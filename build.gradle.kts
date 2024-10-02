@@ -38,8 +38,12 @@ allprojects {
 
         api("org.scala-lang:scala3-compiler_3:${vs.scala.v}")
         api("org.scala-lang:scala3-tasty-inspector_3:${vs.scala.v}")
+
+        // https://mvnrepository.com/artifact/com.lihaoyi/pprint
+        api("com.lihaoyi:pprint_3:0.9.0")
+
     }
-              
+
     tasks {
 
         withType<ScalaCompile> {

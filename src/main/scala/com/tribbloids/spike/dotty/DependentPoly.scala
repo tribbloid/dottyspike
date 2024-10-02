@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty
 
-class DependentPoly {
+object DependentPoly {
 
   sealed trait Col[V] {
 
