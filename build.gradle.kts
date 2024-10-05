@@ -37,7 +37,10 @@ allprojects {
         api("dev.zio:izumi-reflect_3:2.3.10")
 
         api("org.scala-lang:scala3-compiler_3:${vs.scala.v}")
+
         api("org.scala-lang:scala3-tasty-inspector_3:${vs.scala.v}")
+
+        implementation("ch.epfl.scala:tasty-query_3:1.4.0")
 
         // https://mvnrepository.com/artifact/com.lihaoyi/pprint
         api("com.lihaoyi:pprint_3:0.9.0")

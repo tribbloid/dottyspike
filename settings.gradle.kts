@@ -1,10 +1,13 @@
 //val versions = gradle.rootProject.versions()
 
+include("six")
+project(":six").projectDir = file("six-scala/module")
 
 include(
-    ":spark",
+    ":six:typetag",
+    ":core",
+    ":spark"
 )
-
 
 pluginManagement.repositories {
     gradlePluginPortal()
