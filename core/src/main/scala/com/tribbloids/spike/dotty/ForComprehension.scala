@@ -22,7 +22,6 @@ object ForComprehension {
       def map[TT](fn: ((X, Y)) => TT): FlatMap[(X, Y), TT] = flatMap(v => Const(fn(v)))
 
       def withFilter(fn: ((X, Y)) => Boolean): Filter[(X, Y)] = Filter(_cartesian, fn)
-
     }
   }
 
