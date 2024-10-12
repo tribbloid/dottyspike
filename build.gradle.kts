@@ -1,5 +1,3 @@
-val vs = versions()
-
 buildscript {
     repositories {
         // Add here whatever repositories you're already using
@@ -7,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("ch.epfl.scala:gradle-bloop_2.12:1.6.2") // suffix is always 2.12, weird
+        classpath("ch.epfl.scala:gradle-bloop_2.13:1.6.2")
     }
 }
 
@@ -15,6 +13,8 @@ plugins {
     id("ai.acyclic.scala3-conventions")
     id("ai.acyclic.publish-conventions")
 }
+
+val vs = versions()
 
 allprojects {
 

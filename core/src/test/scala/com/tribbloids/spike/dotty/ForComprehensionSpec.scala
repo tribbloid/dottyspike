@@ -6,17 +6,30 @@ class ForComprehensionSpec extends AnyFunSpec {
 
   it("example 1") {
 
-    val src = ForComprehension.ID[Int]("x");
+    val srcX = ForComprehension.ID[Int]("x");
+    val srcY = ForComprehension.ID[Int]("y");
 
 //    val src = List(1, 2)
 
-    val r1 = for {
-      a <- src
-      b = a * 2
-    } yield {
-      a + b
+    {
+      val r1 = for {
+        a <- srcX
+        b = a * 2
+      } yield {
+        a + b
+      }
+      pprint.pprintln(r1)
     }
-    pprint.pprintln(r1)
+
+    {
+      val r1 = for {
+        a <- srcX
+        c <- srcY
+      } yield {
+        a.value + c
+      }
+      pprint.pprintln(r1)
+    }
 
 //    val r2 = src
 //      .map { a =>
@@ -40,7 +53,7 @@ class ForComprehensionSpec extends AnyFunSpec {
     val r1 = for (
       a <- s1;
       b <- s2
-    ) yield a + b
+    ) yield a.value + b
 
     pprint.pprintln(r1)
 
