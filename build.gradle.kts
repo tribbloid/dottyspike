@@ -68,6 +68,11 @@ allprojects {
 idea {
 
     module {
-        excludeDirs.add(file("doc"))
+        excludeDirs.addAll(
+            listOf(
+                file("doc"),
+                file("six-scala")
+            )
+        )
     }
 }
