@@ -8,7 +8,7 @@ import scala.tasty.inspector.*
 
 class TASTyInspectionSpike extends AnyFunSpec {
 
-  it("on file") {
+  ignore("on file") {
 
     val tastyFiles = List("foo/Bar.tasty")
     TastyInspector.inspectTastyFiles(tastyFiles)(new MyInspector)

@@ -5,6 +5,7 @@ project(":six").projectDir = file("six-scala/module")
 
 include(
     ":six:typetag",
+    ":six:spark",
     ":core",
     ":spark"
 )

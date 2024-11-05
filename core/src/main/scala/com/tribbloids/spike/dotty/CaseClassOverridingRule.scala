@@ -7,7 +7,7 @@ object CaseClassOverridingRule {
     trait A {
       type CC
 //      def CC: Int => CC  // only works in Scala 2
-      def CC: { def apply(v: Int): CC }
+      def CC: AnyRef { def apply(v: Int): CC }
     }
 
     object AA extends A {
