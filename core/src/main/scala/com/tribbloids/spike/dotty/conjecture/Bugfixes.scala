@@ -1,5 +1,7 @@
 package com.tribbloids.spike.dotty.conjecture
 
+import ai.acyclic.six.testing.Verify
+
 object Bugfixes {
 
   import compiletime.testing.*
@@ -11,15 +13,18 @@ object Bugfixes {
 
       summon[F[Product] <:< F[? <: Product]]
 
-      //      summon[F[_ <: Product] <:< F[Product]] // oops
-      //      summon[F[Product] =:= F[_ <: Product]] // oops
+//      summon[F[? <: Product] <:< F[Product]] // oops
+//      summon[F[Product] =:= F[? <: Product]] // oops
 
-      typeCheckErrors( // Not widely used as string cannot be refactored regardless
+      Verify.mustHaveTypeErrors( // Not widely used as string cannot be refactored regardless
         """
-          summon[F[_ <: Product] <:< F[Product]] // oops
-          summon[F[Product] =:= F[_ <: Product]] // oops
-          """
+      summon[F[? <: Product] <:< F[Product]] // oops
+      summon[F[Product] =:= F[? <: Product]] // oops
+        """
       )
+
+//      summon[F[? <: Product] <:< F[Product]] // oops
+//      summon[F[Product] =:= F[? <: Product]] // oops
     }
 
     { // Dual
@@ -44,6 +49,24 @@ object Bugfixes {
         override type T_\/ = Nothing
 
       }
+
+      summon[ProductGen.Mat =:= LessThanProductGen.Mat]
+    }
+
+    { // Dual, non-purist, can use type constructor
+
+      trait F_* {
+        type TT
+      }
+
+      trait TGen[/\, \/ <: /\] {
+
+        type Mat = F_* { type TT <: /\ }
+      }
+
+      object ProductGen extends TGen[Product, Product] {}
+
+      object LessThanProductGen extends TGen[Product, Nothing] {}
 
       summon[ProductGen.Mat =:= LessThanProductGen.Mat]
     }

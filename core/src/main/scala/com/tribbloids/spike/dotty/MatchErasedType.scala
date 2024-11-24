@@ -17,7 +17,7 @@ object MatchErasedType {
       given Typeable[T1] = tt
 
       v match {
-        case vv: T1 with Int => println(1); vv
+        case vv: (T1 & Int) => println(1); vv
 //        case vv: T1 { def pre: Int } => println(2); vv
         case vv: T1 => println(3); vv
         case _ => println(4); default
