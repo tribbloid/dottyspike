@@ -50,6 +50,8 @@ object TypeProjectionDropped {
       type R = T match {
         case E1.K[k] => Map[k, Int]
       }
+
+      def take(v: R): Unit = {}
     }
 
     object E1X extends E1 {
@@ -58,6 +60,7 @@ object TypeProjectionDropped {
     }
 
     val of = Of[E1X.type]()
+//    of.take(2: of.R)
     Verify mustHaveTypeErrors "of.take(2)"
   }
 
