@@ -2,8 +2,7 @@ package com.tribbloids.spike.dotty
 
 import org.scalatest.funspec.AnyFunSpec
 
-class MatchMixin extends AnyFunSpec{
-
+class MatchMixin extends AnyFunSpec {
 
   it("sanity") {
     trait Mixin

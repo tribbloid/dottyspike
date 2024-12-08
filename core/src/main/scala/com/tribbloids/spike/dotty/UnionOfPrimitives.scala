@@ -2,14 +2,14 @@ package com.tribbloids.spike.dotty
 
 object UnionOfPrimitives {
 
-  type UU  = Int | Double | Null
+  type UU = Int | Double | Null
 
 //  implicitly[UU <:< AnyVal]
 //  implicitly[UU <:< AnyRef]
   implicitly[UU <:< Any]
-  
+
   val i1: UU = 1
-  val i2 : UU = 2.0
+  val i2: UU = 2.0
   val i3: UU = null
 
   def main(args: Array[String]): Unit = {

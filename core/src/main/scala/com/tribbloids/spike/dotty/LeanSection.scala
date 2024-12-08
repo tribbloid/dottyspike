@@ -25,7 +25,7 @@ object LeanSection {
         Self <: Section[Self],
         S1 <: Self & Singleton,
         S2 <: Self & Singleton
-    ]: (S1 =:= S2) =
+    ]: S1 =:= S2 =
       ???
   }
 

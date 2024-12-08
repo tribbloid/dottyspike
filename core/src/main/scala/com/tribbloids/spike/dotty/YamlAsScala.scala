@@ -4,26 +4,26 @@ object YamlAsScala {
 
   object YAML:
     apiVersion:
-        apps / v1
+      apps / v1
     kind:
-        Deployment
+      Deployment
     metadata:
-        name:
-            "my-app"
-        namespace:
-            "my-app"
-        labels:
-            app.kubernetes.io / name:
-                "my-app"
-        containers:
-            envFrom:
-                -configMapRef:
-                    name:
-                        "my-app-config-env-vars"
+      name:
+        "my-app"
+      namespace:
+        "my-app"
+      labels:
+        app.kubernetes.io / name:
+          "my-app"
+      containers:
+        envFrom:
+          -configMapRef:
+            name:
+              "my-app-config-env-vars"
 
-                -secretRef: // the empty line above this one is needed
-                    name:
-                        "my-app-secret-env-vars"
+          -secretRef: // the empty line above this one is needed
+            name:
+              "my-app-secret-env-vars"
 
   // Some stubs to prove the syntax above.
   object Deployment

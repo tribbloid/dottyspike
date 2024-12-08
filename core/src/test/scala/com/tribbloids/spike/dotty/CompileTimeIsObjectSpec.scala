@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty
 
-import com.tribbloids.spike.dotty.CompileTimeIsObject.{MyClass, MyObject, isObject}
+import com.tribbloids.spike.dotty.CompileTimeIsObject.{isObject, MyClass, MyObject}
 import org.scalatest.funspec.AnyFunSpec
 
 class CompileTimeIsObjectSpec extends AnyFunSpec {
