@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty.t_proj
 
-import ai.acyclic.six.testing.Verify
+import ai.acyclic.six.testing.Assert
 
 object CaseAgainst {
   // by Odersky: https://github.com/scala/scala3/issues/1050
@@ -19,7 +19,7 @@ object CaseAgainst {
 
     { // Odersky's case
 
-      Verify.assertTypeError("val y: X#A = 1")
+      Assert.typeError("val y: X#A = 1")
     }
 
     {
@@ -27,7 +27,7 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify.assertTypeError("val y: R = 1")
+      Assert.typeError("val y: R = 1")
     }
   }
 
@@ -41,10 +41,10 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify assertTypeError "summon[Int <:< R]"
-      Verify assertTypeError "summon[R <:< Int]"
+      Assert typeError "summon[Int <:< R]"
+      Assert typeError "summon[R <:< Int]"
 
-      Verify assertTypeError "val y: R = 1"
+      Assert typeError "val y: R = 1"
     }
   }
 
@@ -58,10 +58,10 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify.assertTypeError("summon[Int <:< R]")
-      Verify.assertTypeError("summon[R <:< Int]")
+      Assert.typeError("summon[Int <:< R]")
+      Assert.typeError("summon[R <:< Int]")
 
-      Verify.assertTypeError("val y: R = 1")
+      Assert.typeError("val y: R = 1")
     }
 
     {

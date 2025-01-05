@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty
 
-import ai.acyclic.six.testing.Verify
+import ai.acyclic.six.testing.Assert
 import com.tribbloids.spike.dotty.DependentTypeInConstructor.{B, C}
 import org.tribbloid.scaffold.BaseSpec
 
@@ -36,7 +36,7 @@ object DependentTypeInConstructor {
 //    println(valueOf[Ctg])
   }
 
-  Verify.assertTypeError("takeA(new A)")
+  Assert.typeError("takeA(new A)")
 
   takeA(new B {})
 
@@ -50,7 +50,7 @@ class DependentTypeInConstructor extends BaseSpec {
 
   it("test") {
 
-    Verify.assertTypeError("TakeA(new A)")
+    Assert.typeError("TakeA(new A)")
 
     TakeA(new B {})
 
@@ -59,7 +59,7 @@ class DependentTypeInConstructor extends BaseSpec {
 
   it("test2") {
 
-    Verify.assertTypeError("takeA(new A)")
+    Assert.typeError("takeA(new A)")
 
     takeA(new B {})
 
