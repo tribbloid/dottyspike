@@ -95,6 +95,7 @@ The tests were made under the empty constraint
         using
         b: B
     ): A = ???
+
     given (
         using
         c: C

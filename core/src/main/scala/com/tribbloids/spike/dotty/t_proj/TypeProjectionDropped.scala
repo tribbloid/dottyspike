@@ -31,14 +31,14 @@ object TypeProjectionDropped {
     type Key2 <: T
   }
 
-  Verify.mustHaveTypeErrors("type R[T <: E1] = Map[T#Key, T]")
+  Verify.assertTypeError("type R[T <: E1] = Map[T#Key, T]")
   { type R = Map[E1#Key, E1] }
   { type R = Map[E1#Key2, E1] }
 
   {
     def __sanity[T <: E1](): Unit = {
 
-      Verify.mustHaveTypeErrors("type R = Map[T#Key, Int]")
+      Verify.assertTypeError("type R = Map[T#Key, Int]")
 
       type R = T match {
         case E1.K[k] => Map[k, Int]
@@ -61,7 +61,7 @@ object TypeProjectionDropped {
 
     val of = Of[E1X.type]()
 //    of.take(2: of.R)
-    Verify mustHaveTypeErrors "of.take(2)"
+    Verify assertTypeError "of.take(2)"
   }
 
   { type R = Map[E2[Int]#Key, Int] } // works
@@ -70,7 +70,7 @@ object TypeProjectionDropped {
   {
     def __sanity[T <: E2[?]](): Unit = {
 
-      Verify.mustHaveTypeErrors("type R = Map[T#Key, Int]")
+      Verify.assertTypeError("type R = Map[T#Key, Int]")
 
       type R = T match {
         case E2[k] => Map[E2[k]#Key, Int]

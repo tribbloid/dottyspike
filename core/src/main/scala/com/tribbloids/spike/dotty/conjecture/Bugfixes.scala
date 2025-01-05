@@ -16,7 +16,7 @@ object Bugfixes {
 //      summon[F[? <: Product] <:< F[Product]] // oops
 //      summon[F[Product] =:= F[? <: Product]] // oops
 
-      Verify.mustHaveTypeErrors( // Not widely used as string cannot be refactored regardless
+      Verify.assertTypeError( // Not widely used as string cannot be refactored regardless
         """
       summon[F[? <: Product] <:< F[Product]] // oops
       summon[F[Product] =:= F[? <: Product]] // oops

@@ -19,7 +19,7 @@ object CaseAgainst {
 
     { // Odersky's case
 
-      Verify.mustHaveTypeErrors("val y: X#A = 1")
+      Verify.assertTypeError("val y: X#A = 1")
     }
 
     {
@@ -27,7 +27,7 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify.mustHaveTypeErrors("val y: R = 1")
+      Verify.assertTypeError("val y: R = 1")
     }
   }
 
@@ -41,10 +41,10 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify mustHaveTypeErrors "summon[Int <:< R]"
-      Verify mustHaveTypeErrors "summon[R <:< Int]"
+      Verify assertTypeError "summon[Int <:< R]"
+      Verify assertTypeError "summon[R <:< Int]"
 
-      Verify mustHaveTypeErrors "val y: R = 1"
+      Verify assertTypeError "val y: R = 1"
     }
   }
 
@@ -58,10 +58,10 @@ object CaseAgainst {
         case C.K[a] => a
       }
 
-      Verify.mustHaveTypeErrors("summon[Int <:< R]")
-      Verify.mustHaveTypeErrors("summon[R <:< Int]")
+      Verify.assertTypeError("summon[Int <:< R]")
+      Verify.assertTypeError("summon[R <:< Int]")
 
-      Verify.mustHaveTypeErrors("val y: R = 1")
+      Verify.assertTypeError("val y: R = 1")
     }
 
     {
