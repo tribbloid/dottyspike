@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty.conjecture
 
-import ai.acyclic.six.testing.Assert
+import ai.acyclic.six.verification.Verify
 
 object Bugfixes {
 
@@ -16,7 +16,7 @@ object Bugfixes {
 //      summon[F[? <: Product] <:< F[Product]] // oops
 //      summon[F[Product] =:= F[? <: Product]] // oops
 
-      Assert.typeError( // Not widely used as string cannot be refactored regardless
+      Verify.typeError( // Not widely used as string cannot be refactored regardless
         """
       summon[F[? <: Product] <:< F[Product]] // oops
       summon[F[Product] =:= F[? <: Product]] // oops
@@ -77,7 +77,7 @@ object Bugfixes {
     { // Primary
       trait F[-T]
 
-      summon[F[Product] <:< F[_ >: Product]]
+      summon[F[Product] <:< F[? >: Product]]
 
       //      summon[F[_ >: Product] <:< F[Product]] // oops
       //      summon[F[Product] =:= F[_ >: Product]] // oops

@@ -4,7 +4,7 @@ object CompileTimeOps {
 
   import compiletime.ops.int.*
 
-  class Foo[T <: Int with Singleton](t: T) {
+  class Foo[T <: Int & Singleton](t: T) {
     val x: T + T = (t + t).asInstanceOf[T + T]
 
     type Y = T / T

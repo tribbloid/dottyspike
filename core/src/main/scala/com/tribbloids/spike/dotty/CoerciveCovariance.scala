@@ -19,7 +19,7 @@ object CoerciveCovariance {
 
   trait XX[A, B]
 
-  trait XX1[B <: Seq[_]] extends XX[Ext[B], B]
+  trait XX1[B <: Seq[?]] extends XX[Ext[B], B]
 
   trait SI extends Seq[Int]
 

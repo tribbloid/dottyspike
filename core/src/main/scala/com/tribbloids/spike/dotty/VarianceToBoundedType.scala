@@ -15,7 +15,7 @@ object VarianceToBoundedType {
 
   trait Mat[+T]
 
-  implicitly[Mat[Product] <:< Mat[_ <: Product]]
+  implicitly[Mat[Product] <:< Mat[? <: Product]]
 
 //  implicitly[Mat[_ <: Product] <:< Mat[Product]]
 

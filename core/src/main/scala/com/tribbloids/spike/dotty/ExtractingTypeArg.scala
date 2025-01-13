@@ -4,14 +4,14 @@ object ExtractingTypeArg {
 
   trait Vec[+T <: AnyRef]
 
-  trait ArgOf[V <: Vec[_]] {
+  trait ArgOf[V <: Vec[?]] {
 
     type TT
   }
 
   object ArgOf {
 
-    implicit def impl1[V <: Vec[_], T0 <: AnyRef](
+    implicit def impl1[V <: Vec[?], T0 <: AnyRef](
         implicit
         ev: V <:< Vec[T0]
     ): ArgOf[V] { type TT = T0 } =

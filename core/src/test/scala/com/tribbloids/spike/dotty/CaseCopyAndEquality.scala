@@ -33,6 +33,6 @@ class CaseCopyAndEquality extends AnyFunSpec {
 
     assert(r1 == r2)
 
-    assert(r1 equals r2)
+    assert(r1.equals(r2))
   }
 }

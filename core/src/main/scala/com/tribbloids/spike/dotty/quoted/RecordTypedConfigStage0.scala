@@ -30,6 +30,6 @@ object RecordTypedConfigStage0 {
     val params = unpacked.map: (k, v) =>
       '{ ${ Expr(k) } -> $v }
     typ.asType match
-      case '[t] => '{ Config(Map(${ Varargs(params) }: _*)).asInstanceOf[t] }
+      case '[t] => '{ Config(Map(${ Varargs(params) }*)).asInstanceOf[t] }
 
 }

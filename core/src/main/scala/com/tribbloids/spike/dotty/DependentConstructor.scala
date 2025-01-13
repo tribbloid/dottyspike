@@ -20,4 +20,19 @@ object DependentConstructor {
   }
 
   class C4[K]() extends C3[K]()
+
+  object WithoutPrefix {
+
+    trait Base
+
+    implicit class Ext(v: Base) {
+
+      case class Ops()
+    }
+
+    def base1(): Base = ???
+
+    val b1 = base1()
+    val o1 = b1.Ops()
+  }
 }

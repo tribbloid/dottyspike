@@ -12,10 +12,10 @@ object InferToMostSpecificType {
 
   object Options {
 
-    def run[T, S](v: T < (Options with S)): Option[T] < S = ???
+    def run[T, S](v: T < (Options & S)): Option[T] < S = ???
   }
 
-  val v1: Int < (Options with Others) = ???
+  val v1: Int < (Options & Others) = ???
 
   val v2 = Options.run(v1)
 

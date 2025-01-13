@@ -4,7 +4,7 @@ import scala.reflect.Typeable
 
 object MatchExtractTypeArg {
 
-  def mapType(k: Typeable[_], v: Typeable[_]) = {
+  def mapType(k: Typeable[?], v: Typeable[?]) = {
 
     (k, v) match {
       case (k: Typeable[a], v: Typeable[b]) =>

@@ -71,7 +71,7 @@ object HigherKindV3 {
 
     { // Primary
       trait Cov[+T]
-      type Cov_* = Cov[_]
+      type Cov_* = Cov[?]
 
       summon[Cov[_1] <:< Cov[_0]]
 
@@ -109,7 +109,7 @@ object HigherKindV3 {
 
     { // Primary
       trait Cov[-T]
-      type Cov_* = Cov[_]
+      type Cov_* = Cov[?]
 
       summon[Cov[_0] <:< Cov[_1]]
     }

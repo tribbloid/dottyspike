@@ -4,7 +4,7 @@ import scala.reflect.Typeable
 
 object UnapplyTypeArg {
 
-  def mapType(k: Typeable[List[_]], v: Typeable[List[_]]) = {
+  def mapType(k: Typeable[List[?]], v: Typeable[List[?]]) = {
 
     (k, v) match {
 

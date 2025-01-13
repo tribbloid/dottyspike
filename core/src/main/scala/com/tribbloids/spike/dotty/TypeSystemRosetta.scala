@@ -22,7 +22,7 @@ object TypeSystemRosetta {
 
     trait Fields { val _1: String; val _2: Int } // DOT
 
-    type INTERSECTION = String with Product with Serializable // DOT
+    type INTERSECTION = String & Product & Serializable // DOT
 
     type POLY1 = [X] =>> (X => X) => X // H-M DOT
     type POLY2 = (x: (Boolean, Int)) => x._2.type // H-M DOT
@@ -42,7 +42,7 @@ object TypeSystemRosetta {
     import FreeTypeVariables.*
 
     type T1 = F1
-    type T2 = F1 with Product
+    type T2 = F1 & Product
 
     type T3 = (x: F3) => x._2.type
     type T4 = (x: Tau) => x.a1.type

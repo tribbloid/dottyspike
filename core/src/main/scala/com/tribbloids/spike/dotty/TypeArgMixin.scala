@@ -10,7 +10,7 @@ object TypeArgMixin {
 
   trait First extends Base[Product, Int]
 
-  type Second[T] = Base[T, _]
+  type Second[T] = Base[T, ?]
 
   trait Mixed extends First with Second[Tuple1[Int]]
 
@@ -18,7 +18,7 @@ object TypeArgMixin {
     mixed.a: Tuple1[Int]
   }
 
-  trait Mixed2 extends First with Base[Tuple1[Int], _] // this doesn't work in Scala 2
+  trait Mixed2 extends First with Base[Tuple1[Int], ?] // this doesn't work in Scala 2
 
   val fn2 = { (mixed: Mixed2) =>
     mixed.b
