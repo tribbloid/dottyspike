@@ -1,8 +1,9 @@
-package com.tribbloids.spike.dotty
+package com.tribbloids.spike.dotty.issue
 
 import ai.acyclic.six.verification.Verify
 
 object FnAsDepFn {
+// https://github.com/scala/scala3/issues/22363
 
   trait DepFnK[-I] extends Function1[I, ?] {
 
