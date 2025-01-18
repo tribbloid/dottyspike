@@ -50,10 +50,11 @@ class ForComprehensionSpec extends AnyFunSpec {
     val s1 = ForComprehension.ID[Int]("x");
     val s2 = ForComprehension.ID[Int]("y");
 
-    val r1 = for (
-      a <- s1;
-      b <- s2
-    ) yield a.value + b
+    val r1 =
+      for (
+        a <- s1;
+        b <- s2
+      ) yield a.value + b
 
     pprint.pprintln(r1)
 
