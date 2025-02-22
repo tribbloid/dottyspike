@@ -5,6 +5,26 @@ import ai.acyclic.six.spark.serialization.AssertSerializable
 
 class ReduceClosureSerializingWithInline extends SparkUnitTest {
 
+  val k = "1"
+
+  it("will fail") {
+    sc.parallelize(1 to 2).map {
+      v =>
+        k + v
+    }.collect()
+  }
+
+  {
+    val k = "1"
+
+    it("will succeed") {
+      sc.parallelize(1 to 2).map {
+        v =>
+          k + v
+      }.collect()
+    }
+  }
+
   import ReduceClosureSerializingWithInline.*
 
   it("example") {

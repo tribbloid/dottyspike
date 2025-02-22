@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty
 
-import scala.quoted.Type
 import scala.reflect.Typeable
 
 object MatchErasedType {

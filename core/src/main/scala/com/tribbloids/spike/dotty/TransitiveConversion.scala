@@ -102,7 +102,6 @@ object TransitiveConversion {
         }
       }
     }
-    import ConvUtils.given
 
 //    def demo(): Unit = {
 //      val a = new A(42)

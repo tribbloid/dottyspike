@@ -11,7 +11,7 @@ object PrivateEscapingScope {
   }
 
   trait K1 {
-    private lazy val t1: T1 = new T1 {}
+    new T1 {}
 
 //    def r1 = t1.R1 // the only difference with K2 is lazy caching
 
@@ -24,7 +24,7 @@ object PrivateEscapingScope {
   type T1R1 = T1#R1
 
   trait K1_2 {
-    private lazy val t1: T1 = new T1 {}
+    new T1 {}
 
 //    def r1: T1#R1 = t1.R1
 

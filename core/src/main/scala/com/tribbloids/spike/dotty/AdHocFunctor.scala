@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty
 
-import cats.Functor
 
 object AdHocFunctor {
 

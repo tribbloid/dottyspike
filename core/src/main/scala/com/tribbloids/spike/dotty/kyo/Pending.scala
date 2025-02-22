@@ -10,18 +10,7 @@ object Pending {
   type <[+T, -S] >: T // | Must[S]
   // S is contravariant because Pending can be added implicitly
 
-  private def __sanity(): Unit = {
-
-    trait Ex
-
-    trait IO1 {}
-
-    trait IO2 {}
-
-    //      implicitly[(Ex << IO1) <:< (Ex << IO1 << IO2)] only works in Scala 3
-    implicitly[(Ex < IO1) <:< (Ex < IO2 < IO1)]
-    implicitly[(Ex < IO1) <:< (Ex < (IO1 & IO2))]
-  }
+  
 
   sealed trait Add[C] {
 

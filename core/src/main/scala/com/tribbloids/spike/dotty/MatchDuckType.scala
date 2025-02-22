@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty
 
-import scala.reflect.Typeable
 
 object MatchDuckType {
 

@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty
 
-import com.tribbloids.spike.dotty.JoinTypeResolving.C2.B
 
 object JoinTypeResolving {
 
