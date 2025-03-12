@@ -7,7 +7,8 @@ include(
     ":six:typetag",
     ":six:spark",
     ":core",
-    ":spark"
+    ":spark",
+    ":zio-schema"
 )
 
 pluginManagement.repositories {

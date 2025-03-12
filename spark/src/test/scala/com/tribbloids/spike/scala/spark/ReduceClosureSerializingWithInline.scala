@@ -8,20 +8,22 @@ class ReduceClosureSerializingWithInline extends SparkUnitTest {
   val k = "1"
 
   it("will fail") {
-    sc.parallelize(1 to 2).map {
-      v =>
+    sc.parallelize(1 to 2)
+      .map { v =>
         k + v
-    }.collect()
+      }
+      .collect()
   }
 
   {
     val k = "1"
 
     it("will succeed") {
-      sc.parallelize(1 to 2).map {
-        v =>
+      sc.parallelize(1 to 2)
+        .map { v =>
           k + v
-      }.collect()
+        }
+        .collect()
     }
   }
 
