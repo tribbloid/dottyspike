@@ -1,9 +1,9 @@
 package com.tribbloids.spike.scala.spark
 
-import ai.acyclic.six.spark.SparkUnitTest
+import ai.acyclic.six.spark.SparkEnvSpec
 import ai.acyclic.six.spark.serialization.AssertSerializable
 
-class ReduceClosureSerializingWithInline extends SparkUnitTest {
+class ReduceClosureSerializingWithInline extends SparkEnvSpec {
 
   val k = "1"
 

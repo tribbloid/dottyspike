@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty
 
-import org.tribbloid.scaffold.BaseSpec
+import ai.acyclic.six.scaffold.BaseSpec
 
 class OvrdTest extends BaseSpec {
 

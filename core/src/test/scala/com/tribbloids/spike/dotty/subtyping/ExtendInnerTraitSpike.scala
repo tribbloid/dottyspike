@@ -1,6 +1,6 @@
 package com.tribbloids.spike.dotty.subtyping
 
-import org.tribbloid.scaffold.BaseSpec
+import ai.acyclic.six.scaffold.BaseSpec
 
 import scala.reflect.ClassTag
 

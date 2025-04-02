@@ -1,7 +1,7 @@
 package com.tribbloids.spike.dotty
 
 import ai.acyclic.six.verification.Verify
-import org.tribbloid.scaffold.BaseSpec
+import ai.acyclic.six.scaffold.BaseSpec
 
 object DependentTypeInConstructor {
 

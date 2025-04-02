@@ -11,5 +11,8 @@ dependencies {
     api(project(":six:spark"))
     testFixturesApi(testFixtures(project(":six:spark")))
 
+//    api(project(":six:typetag"))
+//    testFixturesApi(testFixtures(project(":six:typetag")))
+
 }
 
