@@ -14,7 +14,9 @@ class AxiomPlugin {
     object Assignment extends Assigment_Imp0
     case class Assignment(user: User, path: Path)
 
-//    val ss: Schema[Assignment] = DeriveSchema.gen[Assignment]
+    implicit lazy val dummy: Schema[Path] = Schema.fail("dummy")
+
+    val ss: Schema[Assignment] = DeriveSchema.gen[Assignment]
     /*
       Error: .. /DeriveSchemaSpike.scala:70:50
       Deriving schema for java.nio.file.Path is not supported

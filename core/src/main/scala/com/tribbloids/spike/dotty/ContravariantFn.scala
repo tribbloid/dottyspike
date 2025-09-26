@@ -30,13 +30,14 @@ object ContravariantFn {
 
   type Drop1[T, R] = R
 
-  trait FilterHalf[-I] extends Fn.Filter[I] {
-
-    type _O[T] = Option[T]
-    def apply(t: I): _O[t.type] = {
-
-      if (random() < 0) Some(t)
-      else None
-    }
-  }
+  // TODO: doesn't work, need a compiler patch
+//  trait FilterHalf[-I] extends Fn.Filter[I] {
+//
+//    type _O[T] = Option[T]
+//    def apply(t: I): _O[t.type] = {
+//
+//      if (random() < 0) Some(t)
+//      else None
+//    }
+//  }
 }
