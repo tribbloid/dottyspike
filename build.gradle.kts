@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("ch.epfl.scala:gradle-bloop_2.13:1.6.2")
+        classpath("ch.epfl.scala:gradle-bloop_2.13:1.6.4")
     }
 }
 
@@ -20,7 +20,7 @@ allprojects {
 
     dependencies {
 
-        val catsV = "2.12.0"
+        val catsV = "2.13.0"
 
         api("org.typelevel:cats-laws_3:${catsV}")
         api("org.typelevel:cats-free_3:${catsV}")
@@ -29,21 +29,21 @@ allprojects {
         api("io.suzaku:boopickle_3:1.5.0")
 
         // https://mvnrepository.com/artifact/org.typelevel/shapeless3-deriving
-        api("org.typelevel:shapeless3-deriving_3:3.4.3")
+        api("org.typelevel:shapeless3-deriving_3:3.5.0")
 
         // https://mvnrepository.com/artifact/eu.timepit/refined
-        api("eu.timepit:refined_3:0.11.2")
+        api("eu.timepit:refined_3:0.11.3")
 
-        api("dev.zio:izumi-reflect_3:2.3.10")
+        api("dev.zio:izumi-reflect_3:3.0.6")
 
         api("org.scala-lang:scala3-compiler_3:${vs.scala.v}")
 
         api("org.scala-lang:scala3-tasty-inspector_3:${vs.scala.v}")
 
-        implementation("ch.epfl.scala:tasty-query_3:1.4.0")
+        implementation("ch.epfl.scala:tasty-query_3:1.6.1")
 
         // https://mvnrepository.com/artifact/com.lihaoyi/pprint
-        api("com.lihaoyi:pprint_3:0.9.0")
+        api("com.lihaoyi:pprint_3:0.9.4")
 
     }
 
