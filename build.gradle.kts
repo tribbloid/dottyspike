@@ -11,6 +11,7 @@ buildscript {
 
 plugins {
     id("ai.acyclic.scala3-conventions")
+    id("ai.acyclic.scalatest-mixin")
     id("ai.acyclic.publish-conventions")
 }
 
@@ -56,7 +57,7 @@ allprojects {
                 additionalParameters.addAll(
                     listOf(
 //                        "-experimental",
-                        "-language:experimental.dependent"
+//                        "-language:experimental.dependent"
                     )
                 )
             }
