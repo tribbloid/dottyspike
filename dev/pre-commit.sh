@@ -5,7 +5,9 @@ CRDIR="$(
   pwd
 )"
 
-echo "[COMPILING]" && \
-"${CRDIR}"/make-all.sh "${@}" && \
+ARGS=("-PsplainVersion=" "${@}")
+
+echo "[FORMATTING]" && \
+"${CRDIR}"/format-code.sh "${@}" && \
 echo "[RUNNING TESTS]" && \
 "${CRDIR}"/test.sh "${@}"

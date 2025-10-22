@@ -3,6 +3,6 @@
 CRDIR="$(cd "`dirname "$0"`"; pwd)"
 FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
 
-${FWDIR}/gradlew wrapper
+source "${CRDIR}/.shared.sh"
 
-${FWDIR}/gradlew dependencyUpdates "$@"
+${FWDIR}/gradlew check --continue "${@}"
