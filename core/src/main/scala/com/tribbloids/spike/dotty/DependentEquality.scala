@@ -1,7 +1,7 @@
 package com.tribbloids.spike.dotty
 
 import scala.compiletime.ops.int.+
-import scala.compiletime.{constValue, error}
+import scala.compiletime.constValue
 
 object DependentEquality {
 

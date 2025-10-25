@@ -43,7 +43,7 @@ object MatchErasedType {
     val tt2 = summon[Typeable[List[Int]]]
 
     val r = List("a", "b") match {
-      case vv: List[Int] => 1
+      case _: List[Int] => 1
       case _ => 2
     }
 

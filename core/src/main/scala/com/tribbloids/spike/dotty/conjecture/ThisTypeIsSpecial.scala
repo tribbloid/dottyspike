@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty.conjecture
 
-
 // https://stackoverflow.com/questions/76104573/in-scala-3-with-dot-calculus-is-this-type-a-path-dependent-type-what-makes-i
 object ThisTypeIsSpecial {
 

@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty
 
-
 object JoinTypeResolving {
 
   object C1 {

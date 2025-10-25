@@ -1,6 +1,5 @@
 package com.tribbloids.spike.dotty.quoted.autolift.spike
 
-import scala.compiletime.summonInline
 import scala.quoted.{Expr, Quotes, Type}
 
 object TypeOfCodeStage0 {

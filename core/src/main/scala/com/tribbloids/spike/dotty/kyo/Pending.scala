@@ -10,8 +10,6 @@ object Pending {
   type <[+T, -S] >: T // | Must[S]
   // S is contravariant because Pending can be added implicitly
 
-  
-
   sealed trait Add[C] {
 
     def apply[V](v: V): V < C = v.asInstanceOf[V < C]
