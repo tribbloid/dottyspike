@@ -1,0 +1,112 @@
+{
+  "allowedTools": [],
+  "history": [
+    {
+      "display": "run dependency insight on scalatest_3",
+      "pastedContents": {}
+    },
+    {
+      "display": "where is the stacktrace?",
+      "pastedContents": {}
+    },
+    {
+      "display": "why is gradle test not printing stacktrace into the console? figure it out and fix it",
+      "pastedContents": {}
+    },
+    {
+      "display": "which plugin enabled the task dependencyTree?",
+      "pastedContents": {}
+    },
+    {
+      "display": "can you do it without writing shell script, just using the capability of the gradle plugin?",
+      "pastedContents": {}
+    },
+    {
+      "display": "this command: gradlew -q dependencyTree will produce a lot of duplicated nodes, improve it to avoid expanding duplicated nodes",
+      "pastedContents": {}
+    },
+    {
+      "display": "/clear ",
+      "pastedContents": {}
+    },
+    {
+      "display": "fix compilation, do not use bothImpl",
+      "pastedContents": {}
+    },
+    {
+      "display": "/clear ",
+      "pastedContents": {}
+    },
+    {
+      "display": "can you set scala compiler version in @buildSrc/src/main/kotlin/ai.acyclic.scala3-conventions.gradle.kts ?",
+      "pastedContents": {}
+    },
+    {
+      "display": "/clear ",
+      "pastedContents": {}
+    },
+    {
+      "display": "where is the version 3.7.1 come from?",
+      "pastedContents": {}
+    },
+    {
+      "display": "which exact transitive dependencies request newer Scala versions?",
+      "pastedContents": {}
+    },
+    {
+      "display": "some of the dependencies introduced scala 3.7.1, figure out where it came from",
+      "pastedContents": {}
+    },
+    {
+      "display": "terminate the process and run again",
+      "pastedContents": {}
+    },
+    {
+      "display": "it is restored",
+      "pastedContents": {}
+    },
+    {
+      "display": "compilation failed, can you fix it?",
+      "pastedContents": {}
+    },
+    {
+      "display": "generate github action scaffold for this project",
+      "pastedContents": {}
+    },
+    {
+      "display": "continue and fix them",
+      "pastedContents": {}
+    },
+    {
+      "display": "compile to verify your work",
+      "pastedContents": {}
+    },
+    {
+      "display": "continue",
+      "pastedContents": {}
+    },
+    {
+      "display": "this project has several compilation error due to scala upgrade, fix them",
+      "pastedContents": {}
+    }
+  ],
+  "mcpContextUris": [],
+  "mcpServers": {},
+  "enabledMcpjsonServers": [],
+  "disabledMcpjsonServers": [],
+  "hasTrustDialogAccepted": true,
+  "ignorePatterns": [],
+  "projectOnboardingSeenCount": 1,
+  "hasClaudeMdExternalIncludesApproved": false,
+  "hasClaudeMdExternalIncludesWarningShown": false,
+  "exampleFiles": [
+    "Bugfixes.scala",
+    "TypeProjectionDropped.scala",
+    "HigherKindV3.scala",
+    "DependentTypeInConstructor.scala",
+    "CaseAgainst.scala"
+  ],
+  "exampleFilesGeneratedAt": 1761075826919,
+  "lastTotalWebSearchRequests": 0,
+  "hasCompletedProjectOnboarding": true
+}
