@@ -36,7 +36,7 @@ allprojects {
         // https://mvnrepository.com/artifact/eu.timepit/refined
         api("eu.timepit:refined_3:0.11.3")
 
-        api("dev.zio:izumi-reflect_3:3.0.6")
+        api("dev.zio:izumi-reflect_3:3.0.9")
 
         api("org.scala-lang:scala3-compiler_3:${vs.scala.v}")
 
@@ -49,7 +49,7 @@ allprojects {
         }
 
         // https://mvnrepository.com/artifact/com.lihaoyi/pprint
-        api("com.lihaoyi:pprint_3:0.9.4")
+        api("com.lihaoyi:pprint_3:0.9.6")
 
     }
 
