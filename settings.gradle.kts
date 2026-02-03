@@ -9,7 +9,8 @@ include(
     ":six:congruence",
     ":core",
     ":spark",
-    ":zio-schema"
+    ":zio-schema",
+    ":kyo"
 )
 
 pluginManagement.repositories {

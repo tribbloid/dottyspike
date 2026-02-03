@@ -1,0 +1,5 @@
+val vs = versions()
+
+dependencies {
+
+}

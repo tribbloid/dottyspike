@@ -1,4 +1,4 @@
-package com.tribbloids.spike.dotty.kyo
+package com.tribbloids.spike.dotty.kyo.scaffold
 
 import scala.language.implicitConversions
 
