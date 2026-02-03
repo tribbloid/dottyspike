@@ -3,4 +3,4 @@
 	url = https://github.com/tribbloid/buildSrc
 [submodule "six-scala"]
 	path = six-scala
-	url = https://github.com/acyclic-ai/six-scala
+	url = https://github.com/acyclicAI/six-scala
