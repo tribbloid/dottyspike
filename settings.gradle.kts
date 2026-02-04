@@ -10,7 +10,8 @@ include(
     ":core",
     ":spark",
     ":zio-schema",
-    ":kyo"
+    ":kyo",
+    ":turbolift"
 )
 
 pluginManagement.repositories {
