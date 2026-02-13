@@ -24,13 +24,57 @@ class FirstExampleTest extends AnyFunSuite {
     assert(result == Right(((), 33)))
   }
 
-  test("partial evaluation") {
+  test("partial evaluation 1") {
 
-    val program: Unit !! (State[Int] & State[String] & Error[String]) = for
+    val program: Unit !! (State[Int] & State[String]) = for
       a <- State.get[Int]
       b <- State.get[String]
-      c <- if a != 0 then !!.pure(a + 1) else Error.raise(s"Tried to divide $a by zero")
+      c <- {
+
+        !!.pure {
+          println("c evaluated")
+          a + 1
+        }
+      }
       _ <- State.put(b + c)
     yield ()
+
+    val e1 = program.handleWith(State.handler(100))
+
+    val e2 = e1
+      .handleWith(State.handler("str"))
+      .handleWith(Error.handler)
+
+    val r1 = e2.run
+
+    println(r1)
+    assert(r1 == Right((((), 201), "str")))
+
+  }
+
+  test("partial evaluation 2") {
+
+    val program: Unit !! (State[Int]) = for
+      a <- {
+        println("got a")
+        State.get[Int]
+      }
+      c <- {
+        !!.pure {
+          println("got c")
+          a + 1
+        }
+      }
+      _ <- State.put(a + c)
+    yield ()
+
+    val e1 = program.handleWith(State.handler(100))
+
+    val e2 = e1
+      .handleWith(Error.handler)
+
+    val r1 = e2.run
+
+    println(r1)
   }
 }
