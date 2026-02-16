@@ -1,4 +1,6 @@
-# DottySpike - Scala 3 Experiments
+# AGENTS.md — Critical instructions — READ THIS FIRST
+
+This file contains information for AI agents working on the prover-commons project.
 
 ## Build & Test Commands
 - **Build all**: `./gradlew build`
@@ -14,9 +16,24 @@
 - **Scala version**: Scala 3 with experimental features (`-language:experimental.dependent`)
 - **Build system**: Gradle with Kotlin DSL
 
-## Code Style
-- **Format**: Scalafmt v3.8.5 (Scala 3 dialect), max column 120, sorted imports
-- **Tests**: ScalaTest with `AnyFunSpec`, using JUnit Platform
-- **Package naming**: `com.tribbloids.spike.*` for experiments, `ai.acyclic.*` for libraries
-- **Import style**: Standard Scala 3 imports, use `scala.quoted.*` for macros
-- **No code comments**: Keep code clean without explanatory comments unless complex
+All the following links should be resolved using their absolute paths. Some of them are outside the project root.
+
+## Initial Setup (One-time)
+
+generate and validate local settings, see [this](buildSrc/.agent/init.md)
+
+## Guardrails (violate only if user explicitly says "ignore AGENTS.md")
+
+see [this](buildSrc/.agent/guardrails.md)
+
+## Frequently Used Commands
+
+see [this](buildSrc/.agent/common-commands.md)
+
+## Code Style & Conventions
+
+see [this](buildSrc/.agent/file-organization.md)
+
+## Development Workflow
+
+see [this](buildSrc/.agent/development-workflow.md)

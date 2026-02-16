@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode",
+  "autoupdate": true,
+  "mcp": {
+    "fetch": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-fetch"],
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
+    },
+    "memory": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-memory"],
+      "enabled": true,
+      "environment": {
+        "MEMORY_FILE_PATH": "/tmp/mcp-memory.json"
+      }
+    },
+    "deepwiki": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.deepwiki.com/mcp"],
+      "enabled": true
+    },
+    "jetbrains": {
+      "type": "remote",
+      "url": "http://localhost:64342/sse",
+      "enabled": true,
+      "headers": {
+        "IJ_MCP_SERVER_PROJECT_PATH": "/Users/pengcheng/git-spike/dottyspike"
+      }
+    }
+  }
+}
