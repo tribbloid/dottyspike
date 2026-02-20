@@ -4,8 +4,8 @@ object GenericEtaExpansion {
 
   def fn[T](v: T): String = " " + v
 
-  val ee: [T] => (T => String) = {
-    [T] => { (v: T) =>
+  val ee: [T] => (T => String) = { [T] =>
+    { (v: T) =>
       " " + v
     }
   }

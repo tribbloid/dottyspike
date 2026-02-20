@@ -3,10 +3,9 @@ package ai.acyclic.zio.zio
 import zio.{Console, Task, UIO, ZEnvironment, ZIO, ZLayer}
 
 /**
- * Demonstrates partial environment provision in ZIO.
- * When only part of the required environments is provided, ZIO simplifies
- * the effect type by removing the provided dependencies from the requirement.
- */
+  * Demonstrates partial environment provision in ZIO. When only part of the required environments is provided, ZIO
+  * simplifies the effect type by removing the provided dependencies from the requirement.
+  */
 class PartialEnvironmentExample {
 
   // Define service traits
@@ -30,8 +29,8 @@ class PartialEnvironmentExample {
   type FullEnv = DbEnv & CacheEnv & LogEnv
 
   /**
-   * An effect requiring all three environments
-   */
+    * An effect requiring all three environments
+    */
   def fetchDataWithCaching(userId: String): ZIO[FullEnv, Throwable, String] =
     for {
       cache <- ZIO.service[CacheService]
@@ -53,9 +52,8 @@ class PartialEnvironmentExample {
     } yield result
 
   /**
-   * PARTIAL EVALUATION EXAMPLE 1:
-   * Provide only Logger and Cache, leaving Database requirement
-   */
+    * PARTIAL EVALUATION EXAMPLE 1: Provide only Logger and Cache, leaving Database requirement
+    */
   def partialProvideExample(): Unit = {
     val loggerLayer: ZLayer[Any, Nothing, LoggerService] =
       ZLayer.succeed(new LoggerService {
@@ -85,9 +83,8 @@ class PartialEnvironmentExample {
   }
 
   /**
-   * PARTIAL EVALUATION EXAMPLE 2:
-   * Progressive layer building showing type-level simplification
-   */
+    * PARTIAL EVALUATION EXAMPLE 2: Progressive layer building showing type-level simplification
+    */
   def progressiveLayerBuilding(): Unit = {
     val dbImpl: DatabaseService = new DatabaseService {
       def query(sql: String): Task[List[String]] =
@@ -124,9 +121,8 @@ class PartialEnvironmentExample {
   }
 
   /**
-   * PARTIAL EVALUATION EXAMPLE 3:
-   * Using provideSomeEnvironment for runtime simplification
-   */
+    * PARTIAL EVALUATION EXAMPLE 3: Using provideSomeEnvironment for runtime simplification
+    */
   def provideSomeEnvironmentExample(): Unit = {
     val fullEffect: ZIO[DbEnv & CacheEnv & LogEnv, Throwable, String] =
       fetchDataWithCaching("789")

@@ -2,16 +2,17 @@ package com.tribbloids.spike.dotty
 
 import scala.language.experimental.modularity
 
-/** Demonstrates that tracked term/type arguments can be erased without warning
-  * when using type annotations (without Aux pattern) in Scala 3.8.1+
+/**
+  * Demonstrates that tracked term/type arguments can be erased without warning when using type annotations (without Aux
+  * pattern) in Scala 3.8.1+
   *
   * KEY POINT: The `tracked` modifier allows the compiler to:
-  * 1. Erase the tracked parameter at runtime (no bytecode representation)
-  * 2. Preserve type information at compile time via refinement types
-  * 3. Eliminate the need for the Aux pattern to track dependent types
+  *   1. Erase the tracked parameter at runtime (no bytecode representation)
+  *   2. Preserve type information at compile time via refinement types
+  *   3. Eliminate the need for the Aux pattern to track dependent types
   *
-  * Prior to tracked parameters, the Aux pattern was required to preserve type
-  * information across class instantiations, making modular programming verbose.
+  * Prior to tracked parameters, the Aux pattern was required to preserve type information across class instantiations,
+  * making modular programming verbose.
   */
 object TrackedErasureDemo {
 
@@ -39,10 +40,11 @@ object TrackedErasureDemo {
     def compare(t1: T, t2: T): Int
   }
 
-  /** The `tracked` modifier on `ord` parameter:
-    * 1. Erases `ord` at runtime - no field is generated in bytecode
-    * 2. Preserves `ord.T` in the type via refinement: SetFunctorTracked { val ord: IntOrdering.type }
-    * 3. No Aux pattern needed!
+  /**
+    * The `tracked` modifier on `ord` parameter:
+    *   1. Erases `ord` at runtime - no field is generated in bytecode
+    *   2. Preserves `ord.T` in the type via refinement: SetFunctorTracked { val ord: IntOrdering.type }
+    *   3. No Aux pattern needed!
     */
   class SetFunctorTracked(tracked val ord: OrderingTracked) {
     type Set = List[ord.T]
@@ -64,14 +66,14 @@ object TrackedErasureDemo {
     def compare(t1: String, t2: String): Int = t1.compareTo(t2)
   }
 
-  /** Applied constructor type syntax (Scala 3.8+):
-    * Type `SetFunctorTracked(IntOrdering)` is equivalent to:
+  /**
+    * Applied constructor type syntax (Scala 3.8+): Type `SetFunctorTracked(IntOrdering)` is equivalent to:
     * `SetFunctorTracked { val ord: IntOrdering.type }`
     *
     * The tracked parameter `ord` is ERASED but the type `ord.T` is PRESERVED.
     */
-  val IntSet: SetFunctorTracked(IntOrdering) = SetFunctorTracked(IntOrdering)
-  val StringSet: SetFunctorTracked(StringOrdering) = SetFunctorTracked(StringOrdering)
+  val IntSet = SetFunctorTracked(IntOrdering)
+  val StringSet = SetFunctorTracked(StringOrdering)
 
   { // 2. type annotation should be guardrails, not unnsolicited wideninng (as compared to 3.)
     val IntSet: SetFunctorTracked = SetFunctorTracked(IntOrdering)

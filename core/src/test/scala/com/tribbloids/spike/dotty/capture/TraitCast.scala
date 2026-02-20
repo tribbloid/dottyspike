@@ -27,5 +27,8 @@ object TraitCast {
     class HasNone
 
     b.canDo()
+
+    type A = (Int, String)
+    type B = Product *: A
   }
 }
