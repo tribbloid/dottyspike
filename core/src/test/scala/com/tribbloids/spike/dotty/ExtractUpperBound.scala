@@ -4,29 +4,37 @@ object ExtractUpperBound {
 
   trait Subject {
 
-    type Dt
+    type Dt // upper bound
 
-    def fn[T](v: T): T & Any
+    def fn: Any // ditto, but as self-type bound
   }
 
   type DtLt[X] = Subject { type Dt <: X }
 
-  type FnLt[X] = Subject { def fn[T](v: T): T & X }
+  type FnLt[X] = Subject { def fn: X }
 
-  object SS1 extends Subject {
+  trait SS1 extends Subject {
 
     type Dt <: Product
-    def fn[T](v: T): T & Product = ???
+    override def fn: Product = ???
+  }
+  object SS1 extends SS1
+
+  trait SS2 extends SS1 {
+
+    type Dt <: Tuple
+    override def fn: Tuple = ???
   }
 
-//  val v1: SS1.Dt & Any = (1, 2)
-  val v2: (Int, Int) = SS1.fn((1, 2))
+  type Extract[T <: Subject] = T match { // should be equivalent to getting the upper bound of Dt
 
-  type Extract[T <: Subject] = T match {
-
-    case FnLt[X] => X
+    case FnLt[x] => x
   }
 
-  type E1 = Extract[SS1.type]
-  summon[E1 =:= Product]
+//  val v1: SS1.Dt & Any = (1, 2) // doesn't work
+  val v2: Extract[SS1.type] = SS1.fn // works
+
+//  summon[Extract[SS1.type] =:= Product] // fail
+//  summon[Extract[SS1.type] <:< Product] // fail
+  summon[Product <:< Extract[SS1.type]] // works
 }
