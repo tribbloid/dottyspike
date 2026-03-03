@@ -21,7 +21,8 @@ object ProofOfBottomScaffold {
 
     override def proofOfBottom[TSub <: Peer](v: TSub): Bottom <:< TSub =
       v match {
-        case Eye => ???
+        case v0 @ Eye =>
+          summon[Bottom <:< v0.type].andThen(summon[v0.type <:< TSub])
       }
   }
 
@@ -34,14 +35,12 @@ object ProofOfBottomScaffold {
     override type Bottom = ><:[Nothing, tail.Bottom] & Peer
 
     override def proofOfBottom[TSub <: Peer](v: TSub): Bottom <:< TSub = {
-      (tail: TupleThing) match {
-        case Eye =>
-          ()
-        case cons: Cons[_, _] =>
-          cons.proofOfBottom(cons.peer)
+      v match {
+        case v0: ><:[H, tail.type] =>
+
+          ???
       }
 
-      ???
     }
 
   }
