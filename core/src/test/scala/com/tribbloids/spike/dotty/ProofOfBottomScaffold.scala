@@ -38,7 +38,8 @@ object ProofOfBottomScaffold {
       v match {
         case v0: ><:[H, tail.type] =>
 
-          ???
+          val head = summon[Nothing <:< H]
+          val recursiveEv = v0.tail.proofOfBottom(v0.tail.peer)
       }
 
     }
