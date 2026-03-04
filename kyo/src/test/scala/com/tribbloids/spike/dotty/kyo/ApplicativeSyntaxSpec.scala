@@ -11,8 +11,8 @@ class ApplicativeSyntaxSpec extends AnyFunSpec {
       import AllowUnsafe.embrace.danger
       // Trying to verify if <*> is supported directly or via extension methods
 
-      val v1: Int < IO = IO(1)
-      val v2: Int < IO = IO(2)
+      val v1: Int < IO = IO.defer(1)
+      val v2: Int < IO = IO.defer(2)
 
       // Custom extension method to support <*>
       extension [A, S1](v1: A < S1) def <*>[B, S2](v2: B < S2): (A, B) < (S1 & S2) = Kyo.zip(v1, v2)
@@ -22,8 +22,8 @@ class ApplicativeSyntaxSpec extends AnyFunSpec {
       // Kyo typically uses zip for applicative composition
       val combinedZip = Kyo.zip(v1, v2).map { case (a, b) => a + b }
 
-      assert(Abort.run(IO.Unsafe.run(combinedZip)).eval.getOrElse(0) == 3)
-      assert(Abort.run(IO.Unsafe.run(combined)).eval.getOrElse(0) == 3)
+      assert(IO.Unsafe.evalOrThrow(Abort.run(combinedZip)).getOrElse(0) == 3)
+      assert(IO.Unsafe.evalOrThrow(Abort.run(combined)).getOrElse(0) == 3)
     }
   }
 }

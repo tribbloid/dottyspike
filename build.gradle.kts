@@ -42,7 +42,7 @@ allprojects {
 
         api("org.scala-lang:scala3-tasty-inspector_3:${vs.scala.v}")
 
-        implementation("ch.epfl.scala:tasty-query_3:1.6.1") {
+        implementation("ch.epfl.scala:tasty-query_3:1.7.0") {
 //            exclude(group = "org.scala-lang", module = "scala3-library_3")
 //            exclude(group = "org.scala-lang", module = "scala3-compiler_3")
 //            exclude(group = "org.scala-lang", module = "scala3-staging_3")

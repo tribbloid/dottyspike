@@ -28,20 +28,31 @@ object ProofOfBottomScaffold {
 
   type ><:[+H, +T <: TupleThing] = Cons[? <: H, ? <: T]
 
+  // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
+
   final case class Cons[H, T <: TupleThing](tail: T) extends TupleThing {
 
-    override type Peer = ><:[H, T]
+    override type Peer = (H ><: tail.Peer) | this.type
 
-    override type Bottom = ><:[Nothing, tail.Bottom] & Peer
+    override type Bottom = Nothing ><: tail.Bottom
 
     override def proofOfBottom[TSub <: Peer](v: TSub): Bottom <:< TSub = {
-      v match {
-        case v0: ><:[H, tail.type] =>
 
-          val head = summon[Nothing <:< H]
-          val recursiveEv = v0.tail.proofOfBottom(v0.tail.peer)
+      val head: Nothing <:< H = summon[Nothing <:< H]
+      val recursive1: tail.Bottom <:< tail.Peer = tail.proofOfBottom(tail.peer)
+
+      val widenTail: ><:[Nothing, tail.Bottom] <:< ><:[Nothing, tail.Peer] = {
+        type Lift[+X] = ><:[Nothing, tail.Bottom] <:< ><:[Nothing, X & TupleThing]
+        recursive1.substituteCo[Lift](summon[><:[Nothing, tail.Bottom] <:< ><:[Nothing, tail.Bottom & TupleThing]])
       }
 
+      val widenHead: ><:[Nothing, tail.Peer] <:< ><:[H, tail.Peer] = {
+        type Lift[+X] = ><:[Nothing, tail.Peer] <:< ><:[X, tail.Peer]
+        head.substituteCo[Lift](summon[><:[Nothing, tail.Peer] <:< ><:[Nothing, tail.Peer]])
+      }
+
+      // TODO: finish this proof!
+      ???
     }
 
   }

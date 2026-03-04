@@ -2,7 +2,7 @@ package com.tribbloids.spike.dotty.issue
 
 object ImplcitCastOfBoxedInt {
 
-  def foo(x: Integer): Option[Int] = Option(x)
+  def foo(x: Integer | Null): Option[Int] = Option(x).map(_.intValue())
 
   def main(args: Array[String]): Unit = {
     val v = foo(null)
