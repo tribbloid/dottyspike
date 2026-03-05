@@ -10,7 +10,7 @@ object ProofOfBottomExample {
 
   sealed trait TupleThing {
 
-    type Peer >: this.type <: TupleThing
+    type Peer <: TupleThing
 
     type Bottom <: Peer
 
@@ -41,18 +41,9 @@ object ProofOfBottomExample {
 
   final case class Cons[H, T <: TupleThing](head: H, tail: T) extends (H ><: T) {
 
-    override type Peer = H ><: T
+    override type Peer = H ><: tail.Peer
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
-
-    override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = {
-      // TODO: implement this, you can only use [[Coe]] to convert values
-      //  do not extract head or tail
-      //  do not use recursion
-      //  write a test case to ensure that it works reliably
-
-      ???
-    }
 
 //    def proofWithCompiler2[TSub <: Peer] = {
 //      summon[Bottom <:< TSub]
