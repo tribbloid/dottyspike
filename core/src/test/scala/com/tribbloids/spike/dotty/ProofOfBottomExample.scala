@@ -24,7 +24,7 @@ object ProofOfBottomExample {
 
     override type Peer = Eye.type
 
-    override type Bottom = Eye.type
+    override type Bottom = Inhabited
 
     def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = { v =>
       v
@@ -32,18 +32,21 @@ object ProofOfBottomExample {
   }
 
   sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
+    val head: H
     val tail: T
   }
 
   type KK = Cons[Int, TupleThing]
 
-  final case class Cons[H, T <: TupleThing](tail: T) extends (H ><: T) {
+  final case class Cons[H, T <: TupleThing](head: H, tail: T) extends (H ><: T) {
 
     override type Peer = H ><: T
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
     override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
+      // TODO: implement this, you can only use [[Coe]] to convert values
+      //  do not extract head or tail
       v
     }
 
