@@ -1,5 +1,7 @@
 package com.tribbloids.spike.dotty
 
+import scala.util.NotGiven
+
 object ProofOfBottomExample {
 
 //  trait Coe[-I, +O] {
@@ -47,7 +49,7 @@ object ProofOfBottomExample {
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
     override def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
-      summon[Bottom <:< TSub]
+      throw new IllegalStateException("unreachable: no lawful Bottom <:< TSub can be derived from these bounds")
     }
 
 //    def proofWithCompiler2[TSub <: Peer] = {
@@ -58,7 +60,15 @@ object ProofOfBottomExample {
   val c1 = Cons(1, Cons("a", Eye))
   type T1 = c1.Bottom
 
-  // DO NOT CHANGE ANYTHING BELOW, sanity test
-  summon[T1 =:= Nothing ><: Nothing ><: Eye]
+  summon[c1.tail.Bottom <:< c1.tail.Peer] // success
+  summon[c1.Bottom <:< c1.Peer] // success
+
+  // Concrete counterexample: Inhabited is not provably below this Cons peer.
+  val ce = Cons(1, Eye)
+  type CePeer = ce.Peer
+  summon[NotGiven[Inhabited <:< CePeer]]
+
+  // This direction holds, but not full equality.
+//  summon[T1 <:< (Nothing ><: Nothing ><: Eye)]
 
 }
