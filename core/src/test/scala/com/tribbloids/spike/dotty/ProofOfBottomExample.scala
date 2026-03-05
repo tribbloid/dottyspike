@@ -1,13 +1,14 @@
 package com.tribbloids.spike.dotty
 
-import com.tribbloids.spike.dotty.ProofOfBottomAlt.Eye.{Bottom, Peer}
-import com.tribbloids.spike.dotty.ProofOfBottomAlt.TupleThing
+import com.tribbloids.spike.dotty.ProofOfBottomExample.><:
 
-object ProofOfBottomAlt {
+object ProofOfBottomExample {
 
   trait Coe[-I, +O] {
     def apply(v: I): O
   }
+
+  type Inhabited = Eye.type | ? ><: ?
 
   sealed trait TupleThing {
 
@@ -16,6 +17,8 @@ object ProofOfBottomAlt {
     type Bottom <: Peer
 
     def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub]
+
+    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer]: Bottom <:< TSub
   }
 
   case object Eye extends TupleThing {
@@ -24,10 +27,12 @@ object ProofOfBottomAlt {
 
     override type Bottom = Eye.type
 
-    val coeEye: Coe[Eye.type, Eye.type] = v => v
+    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub] = { v =>
+      v
+    }
 
-    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub] = {
-      coeEye
+    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer] = {
+      summon[Bottom <:< TSub]
     }
   }
 
@@ -45,12 +50,16 @@ object ProofOfBottomAlt {
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
-    def co[H2 >: H, T2 >: T <: TupleThing]: Coe[H ><: T, H2 ><: T2] = v => v
-
-    override def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: ><:[H, T]]: Coe[Bottom, TSub] = {
-      case v0: Cons[Nothing, (tail.Bottom & T)] =>
-        val v1 = v0.co[H, (tail.Bottom & T)]
-
+    override def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
+      v
     }
+
+    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer] = {
+      summon[Bottom <:< TSub]
+    }
+
+//    def proofWithCompiler2[TSub <: Peer] = {
+//      summon[Bottom <:< TSub]
+//    }
   }
 }
