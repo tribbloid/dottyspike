@@ -2,9 +2,9 @@ package com.tribbloids.spike.dotty
 
 object ProofOfBottomScaffold {
 
-  sealed trait TupleThing {
+  sealed trait Tuple {
 
-    type Peer >: this.type <: TupleThing
+    type Peer >: this.type <: Tuple
 
 //    def proofOfPeer: this.type <:< Peer
 
@@ -15,11 +15,11 @@ object ProofOfBottomScaffold {
     def proofOfBottom[TSub <: Peer](v: TSub): Bottom <:< TSub
   }
 
-  case object Eye extends TupleThing {
+  case object Eye extends Tuple {
 
     override type Peer = Eye.type
 
-//    override lazy val proofOfPeer: <:<[Eye.this.type, ProofOfBottomScaffold.Eye.type] = summon
+//    override def proofOfPeer: this.type <:< Peer = summon
 
     override type Bottom = Eye.type
 
@@ -28,47 +28,43 @@ object ProofOfBottomScaffold {
         case v0 @ Eye =>
           summon[Bottom <:< v0.type].andThen(summon[v0.type <:< TSub])
       }
-
   }
-
-  type ><:[+H, +T <: TupleThing] = Cons[? <: H, ?] { type Tail <: T }
 
   // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
-  type KK = Cons[Int, TupleThing]
+  type ><:[+H, +T <: Tuple] = Cons[? <: H, ?] { type Tail <: T }
 
-  final case class Cons[H, T <: TupleThing](tail: T) extends TupleThing {
+  final case class Cons[H, T <: Tuple](tail: T) extends Tuple {
 
+    type Head = H
     type Tail = tail.type
 
     override type Peer = H ><: tail.Peer
 
-//    override def proofOfPeer: <:<[Cons.this.type, H ><: Cons.this.tail.Peer] = summon
-
-//    override lazy val proofOfPeer: <:<[Cons.this.type, H ><: Cons.this.tail.Peer] = {
-//      val ev: tail.type <:< tail.Peer = tail.proofOfPeer
-//
-//      H ><:
-//    }
+//    override def proofOfPeer: this.type <:< Peer = summon
 
     override type Bottom = Nothing ><: tail.Bottom
 
+    type Peer2 = H ><: tail.Peer
+
     override def proofOfBottom[TSub <: Peer](v: TSub): Bottom <:< TSub = {
 
-      val head: Nothing <:< H = summon[Nothing <:< H]
-      val recursive1: tail.Bottom <:< tail.Peer = tail.proofOfBottom(tail.peer)
+      v match {
+        case v0 @ Cons(v0Tail) =>
+          val preamble1 = summon[v0.type <:< TSub]
 
-      val widenTail: ><:[Nothing, tail.Bottom] <:< ><:[Nothing, tail.Peer] = {
-        type Lift[+X] = ><:[Nothing, tail.Bottom] <:< ><:[Nothing, X & TupleThing]
-        recursive1.substituteCo[Lift](summon[><:[Nothing, tail.Bottom] <:< ><:[Nothing, tail.Bottom & TupleThing]])
+          val prev: v0Tail.Bottom <:< v0Tail.Peer = v0Tail.proofOfBottom(v0Tail)
+
+          val head: Nothing <:< v0.Head = summon
+
+          val zipped: (Nothing ><: v0Tail.Bottom) <:< (v0.Head ><: v0Tail.Peer) = ???
+          val zipped2: (Nothing ><: v0Tail.Bottom) <:< (v0.Peer) = ???
+          val zipped3: v0Tail.Bottom <:< v0.Peer = ???
+          val zipped4: v0Tail.Bottom <:< v0.type = ???
+
+          ???
       }
 
-      val widenHead: ><:[Nothing, tail.Peer] <:< ><:[H, tail.Peer] = {
-        type Lift[+X] = ><:[Nothing, tail.Peer] <:< ><:[X, tail.Peer]
-        head.substituteCo[Lift](summon[><:[Nothing, tail.Peer] <:< ><:[Nothing, tail.Peer]])
-      }
-
-      // TODO: finish this proof!
       ???
     }
 
