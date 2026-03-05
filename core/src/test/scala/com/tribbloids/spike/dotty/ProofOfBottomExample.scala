@@ -28,9 +28,10 @@ object ProofOfBottomExample {
     override type Bottom = Inhabited
 
     def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
-      ???
+      summon[Bottom <:< TSub]
     }
   }
+  type Eye = Eye.type
 
   sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
     val head: H
@@ -45,8 +46,19 @@ object ProofOfBottomExample {
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
+    override def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
+      summon[Bottom <:< TSub]
+    }
+
 //    def proofWithCompiler2[TSub <: Peer] = {
 //      summon[Bottom <:< TSub]
 //    }
   }
+
+  val c1 = Cons(1, Cons("a", Eye))
+  type T1 = c1.Bottom
+
+  // DO NOT CHANGE ANYTHING BELOW, sanity test
+  summon[T1 =:= Nothing ><: Nothing ><: Eye]
+
 }
