@@ -47,6 +47,8 @@ object ProofOfBottomExample {
     override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
       // TODO: implement this, you can only use [[Coe]] to convert values
       //  do not extract head or tail
+      //  do not use recursion
+      //  write a test case to ensure that it works reliably
       v
     }
 
