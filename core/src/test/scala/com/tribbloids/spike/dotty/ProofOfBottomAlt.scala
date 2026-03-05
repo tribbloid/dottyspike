@@ -31,7 +31,7 @@ object ProofOfBottomAlt {
     }
   }
 
-  trait ><:[+H, +T <: TupleThing] extends TupleThing {
+  sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
     val tail: T
   }
 
