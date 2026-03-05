@@ -26,7 +26,7 @@ object ProofOfBottomAlt {
 
     val coeEye: Coe[Eye.type, Eye.type] = v => v
 
-    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer](v: Bottom): Coe[Bottom, TSub] = {
+    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub] = {
       coeEye
     }
   }
@@ -47,13 +47,9 @@ object ProofOfBottomAlt {
 
     def co[H2 >: H, T2 >: T <: TupleThing]: Coe[H ><: T, H2 ><: T2] = v => v
 
-    override def proofOfBottom[TSub >: Eye.type | ? ><: ? <: ><:[H, T]](
-        v: Bottom
-    ): Coe[Bottom, TSub] = {
-
-      val up2: H ><: T = co(v)
-
-      ???
+    override def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: ><:[H, T]]: Coe[Bottom, TSub] = {
+      case v0: Cons[Nothing, (tail.Bottom & T)] =>
+        val v1 = v0.co[H, (tail.Bottom & T)]
 
     }
   }
