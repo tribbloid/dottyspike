@@ -2,9 +2,11 @@ package com.tribbloids.spike.dotty
 
 object ProofOfBottomExample {
 
-  trait Coe[-I, +O] {
-    def apply(v: I): O
-  }
+//  trait Coe[-I, +O] {
+//    def apply(v: I): O
+//  }
+
+  type Coe[-I, +O] = I <:< O
 
   sealed trait TupleThing {
 
@@ -13,7 +15,6 @@ object ProofOfBottomExample {
     type Bottom <: Peer
 
     def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub]
-
   }
 
   type Inhabited = Eye.type & (? ><: ?)
@@ -26,8 +27,8 @@ object ProofOfBottomExample {
 
     override type Bottom = Inhabited
 
-    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = { v =>
-      v
+    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = {
+      ???
     }
   }
 
@@ -44,12 +45,13 @@ object ProofOfBottomExample {
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
-    override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
+    override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = {
       // TODO: implement this, you can only use [[Coe]] to convert values
       //  do not extract head or tail
       //  do not use recursion
       //  write a test case to ensure that it works reliably
-      v
+
+      ???
     }
 
 //    def proofWithCompiler2[TSub <: Peer] = {
