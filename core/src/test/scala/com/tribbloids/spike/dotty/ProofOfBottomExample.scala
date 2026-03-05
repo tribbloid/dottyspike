@@ -6,7 +6,7 @@ object ProofOfBottomExample {
 //    def apply(v: I): O
 //  }
 
-  type Coe[-I, +O] = I <:< O
+  type Coercion[-I, +O] = I <:< O
 
   sealed trait TupleThing {
 
@@ -14,7 +14,7 @@ object ProofOfBottomExample {
 
     type Bottom <: Peer
 
-    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub]
+    def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub]
   }
 
   type Inhabited = Eye.type & (? ><: ?)
@@ -27,7 +27,7 @@ object ProofOfBottomExample {
 
     override type Bottom = Inhabited
 
-    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = {
+    def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
       ???
     }
   }
