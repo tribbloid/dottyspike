@@ -4,11 +4,11 @@ object ProofOfBottomScaffold {
 
   sealed trait TupleThing {
 
-    type Peer <: TupleThing
+    type Peer >: this.type <: TupleThing
 
-    def proofOfPeer: this.type <:< Peer
+//    def proofOfPeer: this.type <:< Peer
 
-    def peer: Peer = proofOfPeer(this)
+    def peer: Peer = this
 
     type Bottom <: Peer
 
@@ -19,7 +19,7 @@ object ProofOfBottomScaffold {
 
     override type Peer = Eye.type
 
-    override lazy val proofOfPeer: <:<[Eye.this.type, ProofOfBottomScaffold.Eye.type] = summon
+//    override lazy val proofOfPeer: <:<[Eye.this.type, ProofOfBottomScaffold.Eye.type] = summon
 
     override type Bottom = Eye.type
 
@@ -31,17 +31,25 @@ object ProofOfBottomScaffold {
 
   }
 
-  type ><:[+H, +T <: TupleThing] = Cons[? <: H, ? <: T]
+  type ><:[+H, +T <: TupleThing] = Cons[? <: H, ?] { type Tail <: T }
 
   // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
+  type KK = Cons[Int, TupleThing]
+
   final case class Cons[H, T <: TupleThing](tail: T) extends TupleThing {
+
+    type Tail = tail.type
 
     override type Peer = H ><: tail.Peer
 
-    override lazy val proofOfPeer: <:<[Cons.this.type, H ><: Cons.this.tail.Peer] = {
-      ???
-    }
+//    override def proofOfPeer: <:<[Cons.this.type, H ><: Cons.this.tail.Peer] = summon
+
+//    override lazy val proofOfPeer: <:<[Cons.this.type, H ><: Cons.this.tail.Peer] = {
+//      val ev: tail.type <:< tail.Peer = tail.proofOfPeer
+//
+//      H ><:
+//    }
 
     override type Bottom = Nothing ><: tail.Bottom
 
