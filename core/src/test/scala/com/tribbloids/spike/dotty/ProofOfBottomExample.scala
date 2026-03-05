@@ -10,65 +10,70 @@ object ProofOfBottomExample {
 
   type Coercion[-I, +O] = I <:< O
 
-  sealed trait TupleThing {
+  sealed trait Tuple {
 
-    type Peer <: TupleThing
+    type Peer <: Tuple
 
     type Bottom <: Peer
 
-    def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub]
+    def proofOfBottom[TSub >: Tuple.Inhabited <: Peer]: Coercion[Bottom, TSub]
   }
 
-  type Inhabited = Eye.type & (? ><: ?)
+  object Tuple {
 
-  // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
+    type Inhabited = Eye.type & (? ><: ?)
 
-  case object Eye extends TupleThing {
+    // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
-    override type Peer = Eye.type
+    case object Eye extends Tuple {
 
-    override type Bottom = Inhabited
+      override type Peer = Eye.type
 
-    def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
-      summon[Bottom <:< TSub]
-    }
-  }
-  type Eye = Eye.type
+      override type Bottom = Inhabited
 
-  sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
-    val head: H
-    val tail: T
-  }
-
-  type KK = Cons[Int, TupleThing]
-
-  final case class Cons[H, T <: TupleThing](head: H, tail: T) extends (H ><: T) {
-
-    override type Peer = H ><: tail.Peer
-
-    override type Bottom = (Nothing ><: (tail.Bottom & T))
-
-    override def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
-      throw new IllegalStateException("unreachable: no lawful Bottom <:< TSub can be derived from these bounds")
+      def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
+        summon[Bottom <:< TSub]
+      }
     }
 
-//    def proofWithCompiler2[TSub <: Peer] = {
-//      summon[Bottom <:< TSub]
-//    }
+    type Eye = Eye.type
+
+    sealed trait ><:[+H, +T <: Tuple] extends Tuple {
+      val head: H
+      val tail: T
+    }
+
+    type KK = Cons[Int, Tuple]
+
+    final case class Cons[H, T <: Tuple](head: H, tail: T) extends (H ><: T) {
+
+      override type Peer = H ><: tail.Peer
+
+      override type Bottom = (Nothing ><: (tail.Bottom & T))
+
+      override def proofOfBottom[TSub >: Inhabited <: Peer]: Coercion[Bottom, TSub] = {
+        // TODO: write a proof here
+        ???
+      }
+    }
   }
 
-  val c1 = Cons(1, Cons("a", Eye))
-  type T1 = c1.Bottom
+  import Tuple.*
 
-  summon[c1.tail.Bottom <:< c1.tail.Peer] // success
-  summon[c1.Bottom <:< c1.Peer] // success
+  {
+    // positive examples
+    val c1 = Cons(1, Cons("a", Eye))
+    type T1 = c1.Bottom
 
-  // Concrete counterexample: Inhabited is not provably below this Cons peer.
-  val ce = Cons(1, Eye)
-  type CePeer = ce.Peer
-  summon[NotGiven[Inhabited <:< CePeer]]
+    summon[c1.tail.Bottom <:< c1.tail.Peer] // success
+    summon[c1.Bottom <:< c1.Peer] // success
+  }
 
-  // This direction holds, but not full equality.
-//  summon[T1 <:< (Nothing ><: Nothing ><: Eye)]
+  { // TODO: fill in counterexample stub
+
+    type C1 <: Tuple // write a concrete type here
+    val c1: C1 = ???
+    summon[NotGiven[c1.Bottom <:< c1.Peer]]
+  }
 
 }
