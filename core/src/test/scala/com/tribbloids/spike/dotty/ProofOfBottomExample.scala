@@ -1,14 +1,10 @@
 package com.tribbloids.spike.dotty
 
-import com.tribbloids.spike.dotty.ProofOfBottomExample.><:
-
 object ProofOfBottomExample {
 
   trait Coe[-I, +O] {
     def apply(v: I): O
   }
-
-  type Inhabited = Eye.type | ? ><: ?
 
   sealed trait TupleThing {
 
@@ -16,9 +12,9 @@ object ProofOfBottomExample {
 
     type Bottom <: Peer
 
-    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub]
+    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub]
 
-    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer]: Bottom <:< TSub
+    def proofWithCompiler[TSub >: Inhabited <: Peer]: Bottom <:< TSub
   }
 
   case object Eye extends TupleThing {
@@ -27,11 +23,11 @@ object ProofOfBottomExample {
 
     override type Bottom = Eye.type
 
-    def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: Peer]: Coe[Bottom, TSub] = { v =>
+    def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = { v =>
       v
     }
 
-    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer] = {
+    def proofWithCompiler[TSub >: Inhabited <: Peer] = {
       summon[Bottom <:< TSub]
     }
   }
@@ -39,6 +35,8 @@ object ProofOfBottomExample {
   sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
     val tail: T
   }
+
+  type Inhabited = Eye.type | ? ><: ?
 
   // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
@@ -50,11 +48,11 @@ object ProofOfBottomExample {
 
     override type Bottom = (Nothing ><: (tail.Bottom & T))
 
-    override def proofOfBottom[TSub >: (Eye.type | ? ><: ?) <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
+    override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
       v
     }
 
-    def proofWithCompiler[TSub >: (Eye.type | ? ><: ?) <: Peer] = {
+    def proofWithCompiler[TSub >: Inhabited <: Peer] = {
       summon[Bottom <:< TSub]
     }
 
