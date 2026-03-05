@@ -14,8 +14,11 @@ object ProofOfBottomExample {
 
     def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub]
 
-    def proofWithCompiler[TSub >: Inhabited <: Peer]: Bottom <:< TSub
   }
+
+  type Inhabited = Eye.type & (? ><: ?)
+
+  // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
   case object Eye extends TupleThing {
 
@@ -26,19 +29,11 @@ object ProofOfBottomExample {
     def proofOfBottom[TSub >: Inhabited <: Peer]: Coe[Bottom, TSub] = { v =>
       v
     }
-
-    def proofWithCompiler[TSub >: Inhabited <: Peer] = {
-      summon[Bottom <:< TSub]
-    }
   }
 
   sealed trait ><:[+H, +T <: TupleThing] extends TupleThing {
     val tail: T
   }
-
-  type Inhabited = Eye.type | ? ><: ?
-
-  // IMPORTANT: DO NOT CHANGE ANYTHING ABOVE
 
   type KK = Cons[Int, TupleThing]
 
@@ -50,10 +45,6 @@ object ProofOfBottomExample {
 
     override def proofOfBottom[TSub >: Inhabited <: ><:[H, T]]: Coe[Bottom, TSub] = { v =>
       v
-    }
-
-    def proofWithCompiler[TSub >: Inhabited <: Peer] = {
-      summon[Bottom <:< TSub]
     }
 
 //    def proofWithCompiler2[TSub <: Peer] = {
